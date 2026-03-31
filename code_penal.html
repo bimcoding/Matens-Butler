@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Code Pénal — Matens & Butler — Los Santos</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Josefin+Sans:wght@300;400;600&family=Sorts+Mill+Goudy:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0F0E0A;
+  --bg2:#141309;
+  --surface:#1A1810;
+  --surface2:#201E14;
+  --border:rgba(212,175,80,.1);
+  --border2:rgba(212,175,80,.2);
+  --gold:#D4AF50;
+  --gold-dim:#8B6914;
+  --gold-pale:#EDD98A;
+  --text:#E8E2D4;
+  --text-dim:#9A9480;
+  --text-muted:#5A5545;
+  --red:#C0392B;
+  --red-soft:#E74C3C;
+  --orange:#D35400;
+  --orange-soft:#E67E22;
+  --yellow:#B7950B;
+  --green:#1E8449;
+  --green-soft:#27AE60;
+  --blue:#1A5276;
+  --blue-soft:#2E86C1;
+  --purple:#6C3483;
+  --purple-soft:#8E44AD;
+  --teal:#0E6655;
+  --teal-soft:#17A589;
+  --cat-homicide:#C0392B;
+  --cat-blessure:#D35400;
+  --cat-sexuel:#8E44AD;
+  --cat-psy:#2E86C1;
+  --cat-autorite:#1A5276;
+  --cat-voie:#0E6655;
+  --cat-justice:#B7950B;
+  --cat-honneur:#8B6914;
+  --cat-armes:#E74C3C;
+  --cat-stup:#6C3483;
+  --cat-vol:#D4AC0D;
+  --cat-propriete:#17A589;
+  --cat-admin:#2E4053;
+  --cat-gb:#7B241C;
+  --cat-tr:#922B21;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Sorts Mill Goudy',Georgia,serif;overflow-x:hidden;cursor:default}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--gold-dim);border-radius:3px}
+
+/* STICKY NAV */
+#topnav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(15,14,10,.97);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:14px 48px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:24px;
+}
+.nav-brand{
+  font-family:'DM Serif Display',serif;
+  font-size:16px;color:var(--gold);
+  white-space:nowrap;text-decoration:none;
+}
+.nav-brand span{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--text-dim);display:block;margin-top:2px;
+}
+#search-wrap{flex:1;max-width:480px;position:relative}
+#search{
+  width:100%;
+  background:var(--surface);
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:10px 16px 10px 40px;
+  font-family:'Josefin Sans',sans-serif;
+  font-size:12px;letter-spacing:.05em;
+  outline:none;
+  transition:border-color .3s;
+}
+#search:focus{border-color:var(--border2)}
+#search::placeholder{color:var(--text-muted)}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--text-muted);pointer-events:none}
+.nav-links{display:flex;gap:4px;flex-wrap:wrap}
+.nav-tab{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.25em;text-transform:uppercase;
+  padding:6px 12px;
+  border:1px solid var(--border);
+  color:var(--text-dim);
+  background:none;cursor:pointer;
+  transition:all .25s;white-space:nowrap;
+}
+.nav-tab:hover,.nav-tab.active{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+
+/* HERO */
+#hero{
+  padding:60px 48px 48px;
+  background:linear-gradient(to bottom,var(--bg2),var(--bg));
+  border-bottom:1px solid var(--border);
+  position:relative;overflow:hidden;
+}
+#hero::before{
+  content:'CODE PÉNAL';
+  position:absolute;right:-20px;top:50%;transform:translateY(-50%);
+  font-family:'DM Serif Display',serif;font-size:140px;font-style:italic;
+  color:rgba(212,175,80,.025);pointer-events:none;user-select:none;white-space:nowrap;
+}
+.hero-tag{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8.5px;letter-spacing:.5em;text-transform:uppercase;
+  color:var(--gold-dim);
+  display:flex;align-items:center;gap:12px;margin-bottom:16px;
+}
+.hero-tag::before{content:'';width:32px;height:1px;background:var(--gold-dim)}
+.hero-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(36px,5vw,64px);
+  line-height:.95;color:var(--text);margin-bottom:16px;
+}
+.hero-title em{font-style:italic;color:var(--gold)}
+.hero-notices{
+  display:flex;gap:16px;flex-wrap:wrap;margin-top:28px;
+}
+.notice{
+  display:flex;align-items:flex-start;gap:10px;
+  background:rgba(212,175,80,.05);
+  border:1px solid var(--border);
+  padding:14px 18px;max-width:480px;
+}
+.notice-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.notice-text{font-size:13px;font-style:italic;color:var(--text-dim);line-height:1.6}
+.notice-text strong{color:var(--gold-pale);font-style:normal}
+
+/* FILTERS BAR */
+#filters{
+  padding:20px 48px;
+  background:var(--bg2);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+}
+.filter-label{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--text-muted);margin-right:4px;white-space:nowrap;
+}
+.filter-chip{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.2em;text-transform:uppercase;
+  padding:5px 14px;
+  border:1px solid transparent;
+  cursor:pointer;transition:all .2s;
+  white-space:nowrap;
+}
+.chip-all{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+.chip-prison{background:rgba(192,57,43,.15);color:#E74C3C;border-color:rgba(192,57,43,.3)}
+.chip-detention{background:rgba(211,84,0,.15);color:#E67E22;border-color:rgba(211,84,0,.3)}
+.chip-amende{background:rgba(183,149,11,.15);color:#D4AC0D;border-color:rgba(183,149,11,.3)}
+.filter-chip:hover,.filter-chip.active-chip{filter:brightness(1.3);border-color:currentColor}
+.chip-all.active-chip{background:var(--gold);color:var(--bg)}
+
+/* MAIN CONTENT */
+#main{padding:0 48px 80px}
+
+/* CATEGORY SECTION */
+.cat-section{margin-top:48px}
+.cat-header{
+  display:flex;align-items:center;gap:16px;
+  padding:16px 0;
+  border-bottom:2px solid;
+  margin-bottom:2px;
+  cursor:pointer;
+  user-select:none;
+}
+.cat-icon{font-size:22px}
+.cat-name{
+  font-family:'DM Serif Display',serif;
+  font-size:22px;color:var(--text);flex:1;
+}
+.cat-count{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.35em;text-transform:uppercase;
+  color:var(--text-muted);
+  border:1px solid var(--border);
+  padding:4px 10px;
+}
+.cat-toggle{font-size:12px;color:var(--text-muted);transition:transform .3s}
+.cat-section.collapsed .cat-toggle{transform:rotate(-90deg)}
+
+/* CARDS GRID */
+.cards-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+  gap:2px;
+  background:var(--border);
+}
+.cat-section.collapsed .cards-grid{display:none}
+
+/* CARD */
+.card{
+  background:var(--surface);
+  padding:28px 28px 24px;
+  position:relative;overflow:hidden;
+  transition:background .25s;
+  cursor:pointer;
+}
+.card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;
+  height:2px;
+}
+.card:hover{background:var(--surface2)}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}
+.card-article{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:9px;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--text-muted);
+  display:block;
+}
+.card-procès{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:7px;letter-spacing:.25em;text-transform:uppercase;
+  padding:3px 8px;
+  border:1px solid rgba(212,175,80,.3);
+  color:var(--gold-dim);
+  white-space:nowrap;flex-shrink:0;
+}
+.card-name{
+  font-family:'DM Serif Display',serif;
+  font-size:18px;line-height:1.15;
+  color:var(--text);margin-bottom:16px;
+}
+.card-penalties{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.penalty-row{display:flex;align-items:flex-start;gap:10px}
+.penalty-badge{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:7px;letter-spacing:.2em;text-transform:uppercase;
+  padding:3px 8px;flex-shrink:0;
+  white-space:nowrap;
+}
+.badge-prison{background:rgba(192,57,43,.15);color:#E74C3C;border:1px solid rgba(192,57,43,.3)}
+.badge-detention{background:rgba(211,84,0,.15);color:#E67E22;border:1px solid rgba(211,84,0,.3)}
+.badge-amende{background:rgba(183,149,11,.15);color:#D4AC0D;border:1px solid rgba(183,149,11,.3)}
+.badge-mort{background:rgba(120,20,20,.3);color:#FF6B6B;border:1px solid rgba(200,50,50,.4)}
+.penalty-val{
+  font-size:14px;font-style:italic;
+  color:var(--text-dim);line-height:1.5;
+  word-break:break-word;
+}
+.aggravated-row{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:10px 12px;
+  background:rgba(212,175,80,.04);
+  border:1px solid rgba(212,175,80,.08);
+  margin-top:4px;
+}
+.agg-label{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:7px;letter-spacing:.2em;text-transform:uppercase;
+  padding:2px 6px;flex-shrink:0;
+  background:rgba(212,175,80,.12);
+  color:var(--gold-dim);
+  border:1px solid rgba(212,175,80,.2);
+  white-space:nowrap;
+  align-self:flex-start;
+}
+.agg-val{font-size:13px;font-style:italic;color:var(--text-muted);line-height:1.5}
+.card-def{
+  font-size:13px;font-style:italic;color:var(--text-muted);
+  line-height:1.7;padding-top:14px;
+  border-top:1px solid var(--border);
+  display:none;
+}
+.card-def.open{display:block}
+.card-def-agg{
+  margin-top:10px;padding-top:10px;
+  border-top:1px solid var(--border);
+  font-size:12px;color:var(--text-muted);
+  font-style:italic;line-height:1.6;
+}
+.card-def-agg::before{
+  content:'⚠ Circonstances aggravantes : ';
+  color:var(--gold-dim);font-style:normal;
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.2em;text-transform:uppercase;
+}
+.card-toggle{
+  display:flex;align-items:center;gap:6px;
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--text-muted);
+  margin-top:12px;
+  cursor:pointer;
+  transition:color .2s;
+}
+.card-toggle:hover{color:var(--gold)}
+.card-toggle .arr{transition:transform .25s}
+.card-toggle.open .arr{transform:rotate(180deg)}
+
+/* ROUTE TABLE */
+.route-table{
+  width:100%;border-collapse:collapse;
+  margin-top:2px;
+}
+.route-table th{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.35em;text-transform:uppercase;
+  color:var(--text-muted);
+  padding:12px 16px;text-align:left;
+  border-bottom:1px solid var(--border);
+  background:var(--surface);
+  white-space:nowrap;
+}
+.route-table td{
+  padding:14px 16px;
+  font-size:14px;font-style:italic;
+  color:var(--text-dim);
+  border-bottom:1px solid rgba(212,175,80,.05);
+  vertical-align:top;line-height:1.5;
+}
+.route-table tr:hover td{background:var(--surface2)}
+.route-table .art-cell{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:9px;letter-spacing:.3em;
+  color:var(--text-muted);font-style:normal;
+  white-space:nowrap;
+}
+.route-table .inf-cell{
+  font-style:normal;color:var(--text);
+  font-size:14px;
+}
+.route-table .amt-cell{
+  font-family:'DM Serif Display',serif;
+  font-size:16px;font-style:normal;
+  color:#D4AC0D;white-space:nowrap;
+}
+.route-table .agg-cell{
+  font-size:12px;color:var(--text-muted);font-style:italic;
+}
+
+/* ARMES TABLE */
+.armes-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:2px;
+  background:var(--border);
+  margin-top:2px;
+}
+.arme-card{
+  background:var(--surface);
+  padding:24px;
+  position:relative;
+}
+.arme-cat{
+  font-family:'DM Serif Display',serif;
+  font-size:36px;color:var(--gold);
+  line-height:1;margin-bottom:8px;
+}
+.arme-type{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:9px;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--text-muted);display:block;margin-bottom:10px;
+}
+.arme-name{
+  font-family:'DM Serif Display',serif;
+  font-size:16px;color:var(--text);margin-bottom:12px;
+}
+.arme-exemples{
+  font-size:12px;font-style:italic;color:var(--text-muted);
+  line-height:1.6;margin-bottom:14px;
+  border-left:2px solid var(--border2);padding-left:10px;
+}
+.arme-auth{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.25em;text-transform:uppercase;
+  padding:6px 12px;
+  border:1px solid;
+}
+.auth-civil{color:#27AE60;border-color:rgba(39,174,96,.3);background:rgba(39,174,96,.08)}
+.auth-fdo{color:#2E86C1;border-color:rgba(46,134,193,.3);background:rgba(46,134,193,.08)}
+.auth-garde{color:#E74C3C;border-color:rgba(231,76,60,.3);background:rgba(231,76,60,.08)}
+.arme-just{font-size:12px;font-style:italic;color:var(--text-muted);margin-top:8px}
+
+/* EMPTY STATE */
+.empty{
+  text-align:center;padding:80px 48px;
+  font-family:'DM Serif Display',serif;
+  font-size:22px;font-style:italic;color:var(--text-muted);
+}
+
+/* RESULT COUNT */
+#result-count{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.35em;text-transform:uppercase;
+  color:var(--text-muted);padding:12px 48px;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+}
+#result-count span{color:var(--gold)}
+
+/* FOOTER */
+footer{
+  border-top:1px solid var(--border);
+  padding:32px 48px;
+  display:flex;justify-content:space-between;align-items:center;
+  background:var(--bg2);
+}
+.f-copy{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--text-muted);
+}
+
+/* MODAL */
+#modal-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.8);z-index:500;
+  align-items:center;justify-content:center;
+  padding:24px;
+}
+#modal-overlay.open{display:flex}
+#modal{
+  background:var(--surface);
+  border:1px solid var(--border2);
+  max-width:680px;width:100%;
+  max-height:85vh;overflow-y:auto;
+  position:relative;
+}
+#modal::-webkit-scrollbar{width:4px}
+#modal::-webkit-scrollbar-thumb{background:var(--border2)}
+.modal-header{
+  padding:28px 32px 20px;
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;background:var(--surface);z-index:1;
+}
+.modal-article{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:9px;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--gold-dim);display:block;margin-bottom:8px;
+}
+.modal-title{
+  font-family:'DM Serif Display',serif;
+  font-size:28px;color:var(--text);line-height:1.1;
+}
+.modal-close{
+  position:absolute;top:20px;right:24px;
+  background:none;border:none;
+  font-size:20px;color:var(--text-muted);cursor:pointer;
+  transition:color .2s;
+}
+.modal-close:hover{color:var(--text)}
+.modal-body{padding:24px 32px 32px}
+.modal-section{margin-bottom:24px}
+.modal-section-title{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--gold-dim);margin-bottom:12px;
+  display:flex;align-items:center;gap:10px;
+}
+.modal-section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.modal-def{font-size:16px;font-style:italic;color:var(--text-dim);line-height:1.8}
+.modal-agg-box{
+  background:rgba(212,175,80,.04);
+  border:1px solid rgba(212,175,80,.12);
+  padding:16px 20px;
+  font-size:14px;font-style:italic;color:var(--text-muted);line-height:1.75;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  #topnav{padding:12px 20px;flex-wrap:wrap}
+  .nav-links{display:none}
+  #hero{padding:40px 20px 36px}
+  #filters{padding:16px 20px}
+  #main{padding:0 20px 60px}
+  .cards-grid{grid-template-columns:1fr}
+  #result-count{padding:10px 20px}
+  footer{padding:24px 20px;flex-direction:column;gap:12px;text-align:center}
+  .route-table{display:block;overflow-x:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="topnav">
+  <a href="charles_charles.html" class="nav-brand">
+    Matens &amp; Butler
+    <span>Code Pénal · Los Santos · 2026</span>
+  </a>
+  <div id="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input id="search" type="text" placeholder="Rechercher une infraction, un article...">
+  </div>
+  <div class="nav-links">
+    <button class="nav-tab active" data-tab="penal">Pénal</button>
+    <button class="nav-tab" data-tab="route">Code de la Route</button>
+    <button class="nav-tab" data-tab="armes">Armes</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-tag">Los Santos · San Andreas · Révision 2026</div>
+  <h1 class="hero-title">Code <em>Pénal</em></h1>
+  <div class="hero-notices">
+    <div class="notice">
+      <span class="notice-icon">⚡</span>
+      <p class="notice-text">Les forces de l'ordre ne peuvent appliquer directement que les <strong>peines de détention</strong> et l'<strong>amende</strong> associée. Toute peine de prison nécessite un <strong>procès</strong>.</p>
+    </div>
+    <div class="notice">
+      <span class="notice-icon">⚖️</span>
+      <p class="notice-text">Toutes les peines affichées sont les <strong>peines maximales</strong>. Elles peuvent être réduites par les forces de l'ordre ou par un <strong>Juge</strong> lors d'un procès.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FILTERS -->
+<div id="filters">
+  <span class="filter-label">Filtrer :</span>
+  <button class="filter-chip chip-all active-chip" data-filter="all">Tout afficher</button>
+  <button class="filter-chip chip-prison" data-filter="prison">Prison</button>
+  <button class="filter-chip chip-detention" data-filter="detention">Détention</button>
+  <button class="filter-chip chip-amende" data-filter="amende">Amende uniquement</button>
+</div>
+
+<!-- RESULT COUNT -->
+<div id="result-count"><span id="count-num">—</span> infraction(s) affichée(s)</div>
+
+<!-- MAIN -->
+<div id="main">
+
+  <!-- TAB: PÉNAL -->
+  <div id="tab-penal">
+
+    <!-- HOMICIDES -->
+    <div class="cat-section" id="cat-homicide" data-cat="HOMICIDE">
+      <div class="cat-header" style="border-color:#C0392B" onclick="toggleCat(this)">
+        <span class="cat-icon">💀</span>
+        <span class="cat-name">Homicides & Atteintes à la Vie</span>
+        <span class="cat-count">5 articles</span>
+        <span class="cat-toggle">▾</span>
+      </div>
+      <div class="cards-grid">
+        <div class="card" data-type="prison" data-proc="1" style="--c:#C0392B" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#C0392B"></div>
+          <div class="card-top"><span class="card-article">Art. 187-1</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Meurtre au premier degré<br><em style="font-size:.85em;color:var(--text-muted)">(assassinat)</em></div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">35 ans + 50 000 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val badge-mort" style="color:#FF6B6B;font-size:14px">☠ Peine de mort</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Constitue un meurtre au premier degré le fait de donner volontairement la mort à autrui avec <strong>préparation préalable</strong>, sous quelque forme que ce soit.
+            <div class="card-def-agg">Tout homicide volontaire commis lors de l'exécution d'un crime : acte terroriste, incendie, viol, cambriolage, vol, enlèvement, agression aggravée, négligence grave — ou lorsque la victime représente l'autorité judiciaire ou la force publique.</div>
+          </div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#C0392B"></div>
+          <div class="card-top"><span class="card-article">Art. 187-2</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Meurtre au second degré<br><em style="font-size:.85em;color:var(--text-muted)">(homicide volontaire)</em></div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">30 ans + 40 000 $ (majeur)<br>35 ans + 45 000 $ (mineur)</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val" style="color:#FF6B6B">☠ Peine de mort</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Le fait de causer volontairement la mort d'un être humain <strong>sans préméditation</strong> constitue un meurtre au second degré.</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#C0392B"></div>
+          <div class="card-top"><span class="card-article">Art. 210-3</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Homicide involontaire</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">10 ans + 28 000 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Est qualifié d'homicide involontaire le fait de causer la mort d'autrui par <strong>maladresse, imprudence, inattention, négligence</strong> ou manquement à une obligation de prudence ou de sécurité imposée par la loi.</div>
+        </div>
+
+        <div class="card" data-type="detention" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#D35400"></div>
+          <div class="card-top"><span class="card-article">Art. 210-4</span></div>
+          <div class="card-name">Mise en danger de la vie d'autrui</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-detention">Détention</span><span class="penalty-val">5 ans + 5 000 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Le fait d'exposer directement autrui à un <strong>risque immédiat de mort ou de blessure grave</strong>, par la violation délibérée d'une obligation de sécurité ou de prudence imposée par la loi.</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#C0392B"></div>
+          <div class="card-top"><span class="card-article">Art. 210-5</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Provocation au suicide</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">2 ans + 2 500 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">6 ans + 5 000 $ — si la mort survient effectivement</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Toute action visant à <strong>inciter, aider, encourager ou assister</strong> une personne à se donner la mort.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLESSURES -->
+    <div class="cat-section" id="cat-blessures">
+      <div class="cat-header" style="border-color:#D35400" onclick="toggleCat(this)">
+        <span class="cat-icon">🩸</span>
+        <span class="cat-name">Blessures, Violences & Atteintes Physiques</span>
+        <span class="cat-count">5 articles</span>
+        <span class="cat-toggle">▾</span>
+      </div>
+      <div class="cards-grid">
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#D35400"></div>
+          <div class="card-top"><span class="card-article">Art. 220-1</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Torture</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">16 ans + 18 000 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Tout acte infligeant volontairement une <strong>souffrance intense, physique ou psychologique</strong>, à une personne.</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#D35400"></div>
+          <div class="card-top"><span class="card-article">Art. 220-2</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Maltraitance animale</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">4 ans + 12 000 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">7 ans + 22 000 $ — si l'acte entraîne la mort de l'animal</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Chercher à blesser volontairement un animal domestique ou sauvage, <strong>sans qu'il y ait menace pour la vie humaine</strong>.</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#D35400"></div>
+          <div class="card-top"><span class="card-article">Art. 220-3</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Séquestration</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">10 ans + 9 000 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">12 ans + 14 000 $ (1 circonstance)<br>15 ans + 24 000 $ (≥2 circonstances)</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Priver une personne de sa <strong>liberté de mouvement</strong> par la menace, la contrainte ou la force.
+            <div class="card-def-agg">Peine renforcée si : facilite un crime ou un vol, empêche l'action d'une autorité publique, victime subit des blessures graves ou est terrorisée, auteur détient ou menace d'utiliser une arme, enlèvement associé.</div>
+          </div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#D35400"></div>
+          <div class="card-top"><span class="card-article">Art. 220-4</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Agression</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">6 ans + 4 500 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">14 ans + 18 000 $</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Mettre autrui en danger immédiat, ou établir un <strong>contact physique sans consentement</strong>, de manière offensive ou violente.
+            <div class="card-def-agg">Aggravée si : séquelles graves (mutilation, infirmité, défiguration, strangulation) ; commise contre représentant de l'autorité, agent public, conjoint/concubin ; motivée par la religion, l'origine, le sexe, l'orientation sexuelle ou l'identité de genre.</div>
+          </div>
+        </div>
+
+        <div class="card" data-type="detention" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#8B6914"></div>
+          <div class="card-top"><span class="card-article">Art. 220-6</span></div>
+          <div class="card-name">Abandon d'animal</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">6 ans + 8 500 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Abandonner un animal domestique ou apprivoisé, sans assistance ni soin.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEXUEL -->
+    <div class="cat-section">
+      <div class="cat-header" style="border-color:#8E44AD" onclick="toggleCat(this)">
+        <span class="cat-icon">🚫</span>
+        <span class="cat-name">Infractions Sexuelles</span>
+        <span class="cat-count">2 articles</span>
+        <span class="cat-toggle">▾</span>
+      </div>
+      <div class="cards-grid">
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#8E44AD"></div>
+          <div class="card-top"><span class="card-article">Art. 230-1</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Viol</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-mort">☠ Peine de mort</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Tout acte de pénétration sexuelle, quelle qu'en soit la nature, imposé à une personne par la <strong>contrainte, la menace, la violence ou par effet de surprise</strong>.</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#8E44AD"></div>
+          <div class="card-top"><span class="card-article">Art. 230-2</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Agression sexuelle</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-mort">☠ Peine de mort</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Tout geste à connotation sexuelle, impliquant ou non un contact physique, réalisé <strong>sans l'accord</strong> de la personne concernée.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PSYCHOLOGIQUE / PRESSION -->
+    <div class="cat-section">
+      <div class="cat-header" style="border-color:#2E86C1" onclick="toggleCat(this)">
+        <span class="cat-icon">🧠</span>
+        <span class="cat-name">Pressions Psychologiques & Harcèlement</span>
+        <span class="cat-count">4 articles</span>
+        <span class="cat-toggle">▾</span>
+      </div>
+      <div class="cards-grid">
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#2E86C1"></div>
+          <div class="card-top"><span class="card-article">Art. 240-1</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Diffusion d'informations d'un agent public</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">6 ans + 14 000 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">11 ans + 42 000 $ — si la diffusion entraîne une agression</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Rendre publiques des données personnelles d'une personne exerçant une fonction d'autorité, permettant de l'identifier ou de localiser ses proches, avec un <strong>risque pour leur sécurité</strong>.</div>
+        </div>
+
+        <div class="card" data-type="amende" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#2E86C1"></div>
+          <div class="card-top"><span class="card-article">Art. 240-2</span></div>
+          <div class="card-name">Harcèlement</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-amende">Amende</span><span class="penalty-val">12 000 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">4 ans + 18 000 $ — si vise à obtenir des faveurs sexuelles</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Comportements répétés de nature verbale, physique ou psychologique, <strong>visant à nuire à une personne</strong>.</div>
+        </div>
+
+        <div class="card" data-type="amende" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#2E86C1"></div>
+          <div class="card-top"><span class="card-article">Art. 240-3</span></div>
+          <div class="card-name">Menaces</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-amende">Amende</span><span class="penalty-val">1 000 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">7 ans + 5 500 $ (1 circonstance) — 14 ans + 9 500 $ (≥2)</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Exprimer ou laisser entendre qu'on commettra un crime ou un délit contre autrui, même sans réalisation. <em>La simple intention de saisir la justice n'est pas une menace.</em>
+            <div class="card-def-agg">Aggravée si : dirigée contre magistrat ou agent, à caractère sexuel, menace de mort ou mutilation, envers agent de service public, avec arme, répétée.</div>
+          </div>
+        </div>
+
+        <div class="card" data-type="amende" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#2E86C1"></div>
+          <div class="card-top"><span class="card-article">Art. 240-4</span></div>
+          <div class="card-name">Diffamation</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-amende">Amende</span><span class="penalty-val">13 000 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Nuire à la réputation ou à l'honneur d'une personne en diffusant des <strong>propos mensongers ou trompeurs</strong>. <em>Ne constitue pas une diffamation : les comptes rendus fidèles d'un procès, les déclarations devant une juridiction.</em></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AUTORITÉ -->
+    <div class="cat-section">
+      <div class="cat-header" style="border-color:#1A5276" onclick="toggleCat(this)">
+        <span class="cat-icon">🚔</span>
+        <span class="cat-name">Atteintes à l'Autorité & aux Forces de l'Ordre</span>
+        <span class="cat-count">6 articles</span>
+        <span class="cat-toggle">▾</span>
+      </div>
+      <div class="cards-grid">
+        <div class="card" data-type="detention" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#1A5276"></div>
+          <div class="card-top"><span class="card-article">Art. 310-1</span></div>
+          <div class="card-name">Refus d'obtempérer</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-detention">Détention</span><span class="penalty-val">15 min + 1 000 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Ne pas s'arrêter après une sommation claire et identifiable d'un agent des forces de l'ordre. <strong>Les ELS et sirènes d'un véhicule d'urgence constituent une sommation identifiable.</strong></div>
+        </div>
+
+        <div class="card" data-type="detention" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#1A5276"></div>
+          <div class="card-top"><span class="card-article">Art. 310-2</span></div>
+          <div class="card-name">Entrave aux secours</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-detention">Détention</span><span class="penalty-val">10 min + 2 500 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">20 min + 10 000 $ — si blessures graves ou mort en résulte</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Retarder volontairement l'arrivée des secours, négliger de les prévenir en cas de péril, ou mettre en danger les équipes de secours.</div>
+        </div>
+
+        <div class="card" data-type="detention" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#1A5276"></div>
+          <div class="card-top"><span class="card-article">Art. 310-3</span></div>
+          <div class="card-name">Refus d'obtempérer à un officier</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-detention">Détention</span><span class="penalty-val">5 min + 2 000 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Refuser d'appliquer un ordre légal donné par un officier de police, ou <strong>résister physiquement ou par menace à une arrestation légale</strong>.</div>
+        </div>
+
+        <div class="card" data-type="amende" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#1A5276"></div>
+          <div class="card-top"><span class="card-article">Art. 310-4</span></div>
+          <div class="card-name">Fausse alerte</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-amende">Amende</span><span class="penalty-val">5 500 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Donner volontairement une fausse alerte d'urgence entraînant une <strong>mobilisation inutile des services publics</strong>.</div>
+        </div>
+
+        <div class="card" data-type="detention" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#1A5276"></div>
+          <div class="card-top"><span class="card-article">Art. 310-5</span></div>
+          <div class="card-name">Refus d'identification</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-detention">Détention</span><span class="penalty-val">5 min + 2 000 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Refuser de fournir son identité si la personne est <strong>arrêtée ou soupçonnée d'une infraction</strong>. Le citoyen peut refuser tant qu'il n'a pas été informé de la raison du contrôle. En cas de refus persistant : rétention jusqu'à identification.</div>
+        </div>
+
+        <div class="card" data-type="detention" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#1A5276"></div>
+          <div class="card-top"><span class="card-article">Art. 310-6</span></div>
+          <div class="card-name">Délit de fuite</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-detention">Détention</span><span class="penalty-val">10 min + 800 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Quitter les lieux après un accident, un délit ou une infraction <strong>pour échapper à ses responsabilités</strong>.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VOIE PUBLIQUE -->
+    <div class="cat-section">
+      <div class="cat-header" style="border-color:#17A589" onclick="toggleCat(this)">
+        <span class="cat-icon">🏙️</span>
+        <span class="cat-name">Ordre Public & Voie Publique</span>
+        <span class="cat-count">7 articles</span>
+        <span class="cat-toggle">▾</span>
+      </div>
+      <div class="cards-grid">
+        <div class="card" data-type="detention" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#17A589"></div>
+          <div class="card-top"><span class="card-article">Art. 320-1</span></div>
+          <div class="card-name">Émeute / Incitation à l'émeute</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-detention">Détention</span><span class="penalty-val">15 min + 6 000 $ (participation)<br>5 min + 1 000 $ (incitation)</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">20 min + 8 000 $ (arme) — 30 min + 10 000 $ (mineur impliqué)</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Trouble public impliquant des actes violents commis par <strong>au moins 5 personnes</strong>, créant un danger immédiat pour des biens ou individus. L'incitation consiste à pousser d'autres personnes à y participer.</div>
+        </div>
+
+        <div class="card" data-type="detention" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#17A589"></div>
+          <div class="card-top"><span class="card-article">Art. 320-2</span></div>
+          <div class="card-name">Trouble à l'ordre public</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-detention">Détention</span><span class="penalty-val">10 min + 3 000 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">15 min + 4 000 $ — si le trouble implique violences ou destructions</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Empêcher, de manière organisée et avec menaces, l'exercice de la liberté d'expression, de mouvement, de réunion, de manifestation ou du droit au travail.</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#17A589"></div>
+          <div class="card-top"><span class="card-article">Art. 320-3</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Prostitution & Proxénétisme</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">6 ans + 7 000 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Se livrer à des services sexuels tarifés (prostitution) ou recruter/payer/employer quelqu'un pour les pratiquer (proxénétisme).</div>
+        </div>
+
+        <div class="card" data-type="amende" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#17A589"></div>
+          <div class="card-top"><span class="card-article">Art. 320-4</span></div>
+          <div class="card-name">Dissimulation du visage</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-amende">Amende</span><span class="penalty-val">1 000 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Porter dans l'espace public une tenue destinée à <strong>masquer tout ou une partie du visage</strong>. Les forces de l'ordre peuvent employer la force pour mettre fin à l'infraction.</div>
+        </div>
+
+        <div class="card" data-type="amende" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#17A589"></div>
+          <div class="card-top"><span class="card-article">Art. 320-5</span></div>
+          <div class="card-name">Ivresse sur la voie publique</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-amende">Amende</span><span class="penalty-val">1 200 $ + Garde à vue immédiate</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Se trouver en état d'ivresse manifeste dans un lieu accessible au public. <strong>La personne est immédiatement placée en garde à vue.</strong></div>
+        </div>
+
+        <div class="card" data-type="detention" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#17A589"></div>
+          <div class="card-top"><span class="card-article">Art. 430-1</span></div>
+          <div class="card-name">Occupation illégale de l'espace public</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-detention">Détention</span><span class="penalty-val">15 min + 6 500 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">L'occupation d'un lieu public sans autorisation administrative. <em>Si l'occupation relève de la liberté d'expression, elle est considérée comme licite.</em></div>
+        </div>
+
+        <div class="card" data-type="amende" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#17A589"></div>
+          <div class="card-top"><span class="card-article">Art. 430-2</span></div>
+          <div class="card-name">Trouble de voisinage</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-amende">Amende</span><span class="penalty-val">5 500 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Toute action empiétant sur la propriété d'autrui : maintien d'un objet gênant, clôture intrusive, nuisances répétées.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JUSTICE -->
+    <div class="cat-section">
+      <div class="cat-header" style="border-color:#B7950B" onclick="toggleCat(this)">
+        <span class="cat-icon">⚖️</span>
+        <span class="cat-name">Atteintes à la Justice</span>
+        <span class="cat-count">12 articles</span>
+        <span class="cat-toggle">▾</span>
+      </div>
+      <div class="cards-grid">
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#B7950B"></div>
+          <div class="card-top"><span class="card-article">Art. 330-1</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Parjure</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">6 ans + 6 500 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val badge-mort" style="color:#FF6B6B">☠ Peine de mort — si le faux témoignage entraîne une exécution injuste</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Mentir ou omettre volontairement des informations lors d'un <strong>témoignage sous serment</strong>. Garder le silence ou plaider non coupable ne constitue jamais un parjure.</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#B7950B"></div>
+          <div class="card-top"><span class="card-article">Art. 330-2</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Évasion</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-detention">Détention</span><span class="penalty-val">20 min + 8 000 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">8 ans + 34 000 $ — violence, effraction, corruption ou prison fédérale</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">S'évader de détention ou <strong>aider un détenu à fuir</strong> constitue une infraction pénale.</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#B7950B"></div>
+          <div class="card-top"><span class="card-article">Art. 330-3</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Recel de malfaiteur</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">4 ans + 6 000 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Apporter <strong>aide, logement, ressources ou tout moyen</strong> permettant à un criminel d'échapper à la justice.</div>
+        </div>
+
+        <div class="card" data-type="detention" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#B7950B"></div>
+          <div class="card-top"><span class="card-article">Art. 330-4</span></div>
+          <div class="card-name">Outrage à la justice</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-detention">Détention</span><span class="penalty-val">20 min + 2 600 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Insulter, perturber ou manquer de respect à une juridiction ou à ses représentants. Si l'outrage survient en pleine audience, le juge peut appliquer la sanction immédiatement. <em>Un avocat ne peut être poursuivi pour ses propos de défense sauf abus manifeste.</em></div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#B7950B"></div>
+          <div class="card-top"><span class="card-article">Art. 330-5</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Fraude</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">6 ans + 9 000 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">11 ans + 18 000 $ — si vise une institution publique ou d'État</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Tromper volontairement une personne ou une institution afin d'obtenir un gain ou de causer un préjudice.</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#B7950B"></div>
+          <div class="card-top"><span class="card-article">Art. 330-6 / 340-8</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Destruction / Altération de preuves</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">5 ans + 8 000 $ (détention) — 5 ans + 9 000 $ (altération)</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">10 ans + 15 000 $ — si par un officier/magistrat/expert</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Détruire, cacher, modifier ou falsifier une preuve dans le cadre d'une enquête ou d'un procès. Modifier un lieu de crime ou cacher un document pouvant servir à la manifestation de la vérité.</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#B7950B"></div>
+          <div class="card-top"><span class="card-article">Art. 330-7</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Recel de cadavre</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">6 ans + 7 000 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">11 ans + 12 500 $ — si le corps provient d'un homicide</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Dissimuler ou cacher le corps d'une personne décédée.</div>
+        </div>
+
+        <div class="card" data-type="detention" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#B7950B"></div>
+          <div class="card-top"><span class="card-article">Art. 330-8</span></div>
+          <div class="card-name">Non-dénonciation d'infraction</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-detention">Détention</span><span class="penalty-val">20 min + 3 500 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Avoir connaissance d'une infraction grave encore évitable et <strong>ne pas prévenir les autorités</strong> compétentes.</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#B7950B"></div>
+          <div class="card-top"><span class="card-article">Art. 330-9</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Entrave à la justice</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">6 ans + 8 000 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">15 ans + 18 000 $ — menace directe d'une autorité judiciaire / enquête fédérale</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Toute action visant à <strong>bloquer ou retarder le travail des autorités</strong>, comme l'intimidation d'un témoin ou l'entrave à une enquête.</div>
+        </div>
+
+        <div class="card" data-type="detention" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#B7950B"></div>
+          <div class="card-top"><span class="card-article">Art. 330-11</span></div>
+          <div class="card-name">Trafic d'influence</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-detention">Détention</span><span class="penalty-val">10 min + 3 000 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Abuser de sa position pour obtenir une décision favorable en échange d'un avantage. <br><em>Passif : l'agent abuse de son influence. Actif : le tiers sollicite cette influence.</em></div>
+        </div>
+
+        <div class="card" data-type="amende" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#B7950B"></div>
+          <div class="card-top"><span class="card-article">Art. 330-12</span></div>
+          <div class="card-name">Procédure abusive</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-amende">Amende</span><span class="penalty-val">9 000 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Utiliser la justice de manière <strong>dilatoire, vexatoire ou abusive</strong> pour nuire à autrui.</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#B7950B"></div>
+          <div class="card-top"><span class="card-article">Art. 330-10</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Prise illégale d'intérêts</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">6 ans + 14 000 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Pour un élu ou agent public, tirer un <strong>avantage personnel</strong> d'une affaire sur laquelle il exerce un pouvoir de décision ou de surveillance.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HONNEUR -->
+    <div class="cat-section">
+      <div class="cat-header" style="border-color:#8B6914" onclick="toggleCat(this)">
+        <span class="cat-icon">🏛️</span>
+        <span class="cat-name">Fraudes, Tromperies & Atteintes à l'Honneur</span>
+        <span class="cat-count">8 articles</span>
+        <span class="cat-toggle">▾</span>
+      </div>
+      <div class="cards-grid">
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#8B6914"></div>
+          <div class="card-top"><span class="card-article">Art. 340-1</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Corruption</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">9 ans + 18 000 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Solliciter, recevoir ou accepter un avantage en échange d'un acte lié à sa mission. <br><em>Passive : un agent profite de sa fonction. Active : un tiers tente d'obtenir une faveur indue.</em></div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#8B6914"></div>
+          <div class="card-top"><span class="card-article">Art. 340-2</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Usurpation d'identité ou de fonction</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">3 ans + 9 000 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Utiliser frauduleusement l'identité d'un tiers, ou se présenter comme membre des forces de l'ordre, de la justice ou d'une autorité gouvernementale <strong>sans en avoir la qualité</strong>.</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#8B6914"></div>
+          <div class="card-top"><span class="card-article">Art. 340-3</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Faux et usage de faux</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">7 ans + 23 000 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Falsification, fabrication ou utilisation de <strong>documents mensongers</strong> afin d'obtenir un droit ou un avantage. Les déclarations frauduleuses à l'administration entrent dans ce cadre.</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#8B6914"></div>
+          <div class="card-top"><span class="card-article">Art. 340-4</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Atteinte au secret professionnel</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">3 ans + 5 000 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">30 ans + 10 000 $ — si concerne la justice ou la sécurité de l'État</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Divulgation non autorisée d'informations confidentielles par une personne tenue de les préserver (médecin, avocat, fonctionnaire…).</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#8B6914"></div>
+          <div class="card-top"><span class="card-article">Art. 340-5</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Fausse monnaie</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">12 ans + 38 000 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Fabrication, falsification ou mise en circulation de billets ou pièces <strong>sans autorisation légale</strong>.</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#8B6914"></div>
+          <div class="card-top"><span class="card-article">Art. 340-6</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Abus de pouvoir</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">6 ans + 6 000 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Pour un représentant de l'autorité publique, ordonner ou accomplir arbitrairement un acte <strong>portant atteinte à la liberté individuelle</strong>.</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#8B6914"></div>
+          <div class="card-top"><span class="card-article">Art. 340-7</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Exercice illégal d'une profession</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">6 ans + 15 000 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Se présenter ou agir comme avocat, médecin ou toute profession réglementée <strong>sans l'autorisation ou le diplôme requis</strong>.</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#8B6914"></div>
+          <div class="card-top"><span class="card-article">Art. 350-2</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Association criminelle</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">8 ans + 10 000 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Groupement ou entente destiné à préparer ou commettre une ou plusieurs infractions graves. <strong>Cette peine s'ajoute aux infractions effectivement commises.</strong> Les personnes arrêtées perdent leurs droits à appel téléphonique et visites pendant la détention.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARMES (pénal) -->
+    <div class="cat-section">
+      <div class="cat-header" style="border-color:#E74C3C" onclick="toggleCat(this)">
+        <span class="cat-icon">🔫</span>
+        <span class="cat-name">Infractions liées aux Armes</span>
+        <span class="cat-count">3 articles</span>
+        <span class="cat-toggle">▾</span>
+      </div>
+      <div class="cards-grid">
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#E74C3C"></div>
+          <div class="card-top"><span class="card-article">Art. 360-2</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Vente d'armes sans licence</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">Cat. I, II-A, II-B, V : 8 ans + 10 000 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">Cat. III, IV, VI : 12 ans + 25 000 $</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Vendre des armes <strong>sans être détenteur d'une autorisation officielle</strong>.</div>
+        </div>
+
+        <div class="card" data-type="detention" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#E74C3C"></div>
+          <div class="card-top"><span class="card-article">Art. 360-3</span></div>
+          <div class="card-name">Port illégal d'arme</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-detention">Détention</span><span class="penalty-val">Cat. I : 10 min + 900 $<br>Cat. II-A : 15 min + 1 800 $<br>Cat. II-B : 15 min + 2 800 $<br>Cat. V : 20 min + 5 800 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé (prison)</span><span class="agg-val">Cat. III : 2 ans + 10 200 $ — Cat. IV : 9 ans + 30 000 $ — Cat. VI : 10 ans + 30 000 $</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Port ou détention d'une arme non enregistrée, sans le permis approprié, ou dont le numéro de série est effacé ou altéré.</div>
+        </div>
+
+        <div class="card" data-type="detention" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#E74C3C"></div>
+          <div class="card-top"><span class="card-article">Art. 360-4</span></div>
+          <div class="card-name">Exhibition d'arme</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-detention">Détention</span><span class="penalty-val">10 min + 2 000 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">15 min + 2 900 $ — si des tirs sont réalisés avec l'arme</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Exhibition d'une arme à feu dans les lieux publics ou visibles depuis la voie publique. <em>Exceptions : cas de force majeure, activité de chasse dans les zones prévues.</em></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STUP -->
+    <div class="cat-section">
+      <div class="cat-header" style="border-color:#8E44AD" onclick="toggleCat(this)">
+        <span class="cat-icon">💊</span>
+        <span class="cat-name">Stupéfiants</span>
+        <span class="cat-count">2 articles</span>
+        <span class="cat-toggle">▾</span>
+      </div>
+      <div class="cards-grid">
+        <div class="card" data-type="detention" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#8E44AD"></div>
+          <div class="card-top"><span class="card-article">Art. 370-2</span></div>
+          <div class="card-name">Trafic de stupéfiants</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-detention">Détention</span><span class="penalty-val">10 min + 900 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">15 min + 1 100 $ — si production incluse ou quantité ≥ 1 kg</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Production, distribution ou vente de stupéfiants en dehors du cadre légal.</div>
+        </div>
+
+        <div class="card" data-type="detention" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#8E44AD"></div>
+          <div class="card-top"><span class="card-article">Art. 370-3</span></div>
+          <div class="card-name">Possession de stupéfiants</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-detention">Détention</span><span class="penalty-val">5 min + 50 $/pochon (10g)</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">15 min + 1 100 $ — si quantité ≥ 1 kg ou intention de vente</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Transporter, détenir, acquérir ou consommer des stupéfiants sans autorisation.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VOL -->
+    <div class="cat-section">
+      <div class="cat-header" style="border-color:#D4AC0D" onclick="toggleCat(this)">
+        <span class="cat-icon">💰</span>
+        <span class="cat-name">Vols, Braquages & Escroqueries</span>
+        <span class="cat-count">6 articles</span>
+        <span class="cat-toggle">▾</span>
+      </div>
+      <div class="cards-grid">
+        <div class="card" data-type="detention" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#D4AC0D"></div>
+          <div class="card-top"><span class="card-article">Art. 410-1</span></div>
+          <div class="card-name">Vol</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-detention">Détention</span><span class="penalty-val">10 min + 900 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">15 min + 1 500 $ — en groupe, avec destruction, sur DAB, objet ≥ 2 000 $</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">S'approprier un bien appartenant à autrui, avec ou sans valeur matérielle, <strong>sans le consentement de son propriétaire</strong>.</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#D4AC0D"></div>
+          <div class="card-top"><span class="card-article">Art. 410-2</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Vol armé (braquage)</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-detention">Détention</span><span class="penalty-val">15 min + 1 600 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">10 ans + 20 000 $ — institution d'État, bijouterie, Pacific, convoi de fonds</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Dérober des biens, de l'argent ou des informations sensibles dans une banque, un commerce, un convoi ou un bâtiment officiel.</div>
+        </div>
+
+        <div class="card" data-type="detention" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#D4AC0D"></div>
+          <div class="card-top"><span class="card-article">Art. 410-3</span></div>
+          <div class="card-name">Extorsion (racket)</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-detention">Détention</span><span class="penalty-val">15 min + 1 000 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Contraindre quelqu'un par menace, intimidation ou violence pour obtenir de l'argent, des biens ou des services.</div>
+        </div>
+
+        <div class="card" data-type="detention" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#D4AC0D"></div>
+          <div class="card-top"><span class="card-article">Art. 410-4</span></div>
+          <div class="card-name">Escroquerie</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-detention">Détention</span><span class="penalty-val">10 min + 6 000 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Tromper une personne par des <strong>manœuvres frauduleuses</strong> pour l'amener à céder un bien, de l'argent ou un service.</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#D4AC0D"></div>
+          <div class="card-top"><span class="card-article">Art. 410-5</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Abus de confiance</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">3 ans + 4 500 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">6 ans + 7 000 $ (victime vulnérable) — 9 ans + 9 000 $ (mandataire public)</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Détourner, au préjudice d'autrui, un bien <strong>confié pour un usage déterminé</strong>.</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#D4AC0D"></div>
+          <div class="card-top"><span class="card-article">Art. 410-6</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Détournement de fonds</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">12 ans + 35 000 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">L'appropriation illégale de sommes, titres ou biens remis en raison de <strong>fonctions professionnelles ou publiques</strong>.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROPRIETE -->
+    <div class="cat-section">
+      <div class="cat-header" style="border-color:#17A589" onclick="toggleCat(this)">
+        <span class="cat-icon">🏠</span>
+        <span class="cat-name">Atteintes aux Biens & à la Propriété</span>
+        <span class="cat-count">6 articles</span>
+        <span class="cat-toggle">▾</span>
+      </div>
+      <div class="cards-grid">
+        <div class="card" data-type="amende" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#17A589"></div>
+          <div class="card-top"><span class="card-article">Art. 420-1</span></div>
+          <div class="card-name">Dégradations</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-amende">Amende</span><span class="penalty-val">1 000 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">2 500 $ — graffitis, destruction totale du bien</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Endommager volontairement un bien appartenant à autrui ou à la voie publique. Les graffitis et tags sans autorisation sont assimilés à une dégradation.</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#17A589"></div>
+          <div class="card-top"><span class="card-article">Art. 420-2</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Effraction</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">3 ans + 2 500 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">5 ans + 5 000 $ — si vol, blessures au propriétaire ou dommages graves</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Forcer ou détériorer un dispositif de fermeture, ou l'usage de fausses clefs ou outils similaires.</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#17A589"></div>
+          <div class="card-top"><span class="card-article">Art. 420-3</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Intrusion</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">4 ans + 5 000 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">8 ans + 9 500 $ — si avec arme ou domaine public restreint</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Pénétrer ou se maintenir sur une propriété privée <strong>sans accord du propriétaire</strong>.</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#17A589"></div>
+          <div class="card-top"><span class="card-article">Art. 420-4</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Violation de domicile par un agent public</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">5 ans + 22 000 $</span></div>
+          </div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Tout représentant de l'autorité publique qui s'introduit chez autrui <strong>en dehors des cas prévus par la loi</strong>.</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#17A589"></div>
+          <div class="card-top"><span class="card-article">Art. 420-5</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Occupation illégale de bien (squat)</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-detention">Détention</span><span class="penalty-val">15 min + 3 000 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">3 ans + 8 500 $ — si accompagné de vols ou dégradations</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">S'installer ou se maintenir dans un logement ou bâtiment <strong>sans autorisation du propriétaire</strong>.</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#17A589"></div>
+          <div class="card-top"><span class="card-article">Art. 420-6</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Profanation</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">2 ans + 4 000 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val">4 ans + 7 000 $ — cérémonie en cours, monument protégé, mineurs impliqués</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Dégrader intentionnellement un lieu de culte, une sépulture ou un objet vénéré.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RÉGLEMENTATION -->
+    <div class="cat-section">
+      <div class="cat-header" style="border-color:#2E4053" onclick="toggleCat(this)">
+        <span class="cat-icon">📋</span>
+        <span class="cat-name">Réglementations (Alcool, Tabac, Jeux)</span>
+        <span class="cat-count">3 articles</span>
+        <span class="cat-toggle">▾</span>
+      </div>
+      <div class="cards-grid">
+        <div class="card" data-type="amende" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#2E4053"></div>
+          <div class="card-top"><span class="card-article">Art. 430-4</span></div>
+          <div class="card-name">Réglementation sur l'alcool</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-amende">Amende</span><span class="penalty-val">2 000 $ (1re infraction)<br>3 500 $ (2e infraction)</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé (3e récidive)</span><span class="agg-val">2 ans de prison + 6 500 $</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Vente ou distribution d'alcool : sans licence officielle, aux moins de 21 ans, par des moins de 21 ans, sans vérification d'identité si l'acheteur paraît avoir moins de 27 ans.</div>
+        </div>
+
+        <div class="card" data-type="amende" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#2E4053"></div>
+          <div class="card-top"><span class="card-article">Art. 430-5</span></div>
+          <div class="card-name">Réglementation sur le tabac</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-amende">Amende</span><span class="penalty-val">2 000 $ (1re) — 3 500 $ (2e)</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">3e récidive</span><span class="agg-val">2 ans de prison + 6 500 $</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Cigarettes, cigares, tabac à mâcher ou priser, cigarettes électroniques, narguilés et tout produit contenant de la nicotine. Mêmes règles de vente que l'alcool.</div>
+        </div>
+
+        <div class="card" data-type="amende" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#2E4053"></div>
+          <div class="card-top"><span class="card-article">Art. 430-6</span></div>
+          <div class="card-name">Réglementation sur les jeux d'argent</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-amende">Amende</span><span class="penalty-val">2 000 $ (1re) — 3 500 $ (2e)</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">3e récidive</span><span class="agg-val">2 ans de prison + 6 500 $</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Toute activité impliquant une mise financière dont l'issue dépend du hasard.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- G.B. / TR -->
+    <div class="cat-section">
+      <div class="cat-header" style="border-color:#922B21" onclick="toggleCat(this)">
+        <span class="cat-icon">🚨</span>
+        <span class="cat-name">Grands Banditismes & Crimes d'État</span>
+        <span class="cat-count">3 articles</span>
+        <span class="cat-toggle">▾</span>
+      </div>
+      <div class="cards-grid">
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#922B21"></div>
+          <div class="card-top"><span class="card-article">Art. 350-1</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Actes terroristes</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">90 ans + 500 000 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val badge-mort" style="color:#FF6B6B">☠ Peine de mort — sur décision du juge. Aucun appel recevable.</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Actes commis pour semer la terreur ou déstabiliser gravement l'ordre public : atteintes à la vie, enlèvements, détournements de transport, destructions ou extorsions.</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#922B21"></div>
+          <div class="card-top"><span class="card-article">Art. 510-1</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Séparatisme</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">20 ans + 30 000 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val badge-mort" style="color:#FF6B6B">☠ Peine de mort pour les dirigeants/responsables (décision exclusive d'un juge)</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Volonté d'un groupe de se détacher politiquement par la force d'une collectivité à laquelle il appartient — citoyens révoltés, villes, comtés ou États.</div>
+        </div>
+
+        <div class="card" data-type="prison" data-proc="1" onclick="openCard(this)">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:#922B21"></div>
+          <div class="card-top"><span class="card-article">Art. 510-2</span><span class="card-procès">⚖️ Procès requis</span></div>
+          <div class="card-name">Coup d'État</div>
+          <div class="card-penalties">
+            <div class="penalty-row"><span class="penalty-badge badge-prison">Prison</span><span class="penalty-val">100 ans + 90 000 $</span></div>
+          </div>
+          <div class="aggravated-row"><span class="agg-label">aggravé</span><span class="agg-val badge-mort" style="color:#FF6B6B">☠ Peine de mort</span></div>
+          <div class="card-toggle" onclick="toggleDef(event,this)"><span>Définition</span><span class="arr">▾</span></div>
+          <div class="card-def">Prise de pouvoir d'une ville, d'un comté ou d'un État par une minorité utilisant des <strong>moyens non constitutionnels, surprenants et violents</strong>.</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end tab-penal -->
+
+  <!-- TAB: ROUTE -->
+  <div id="tab-route" style="display:none">
+    <div class="cat-section" style="margin-top:32px">
+      <div class="cat-header" style="border-color:#E67E22" onclick="toggleCat(this)">
+        <span class="cat-icon">🚗</span>
+        <span class="cat-name">Code de la Route</span>
+        <span class="cat-count">16 articles</span>
+        <span class="cat-toggle">▾</span>
+      </div>
+      <table class="route-table">
+        <thead><tr>
+          <th>Article</th><th>Infraction</th><th>Amende</th><th>Peine supp.</th><th>Circonstances aggravantes</th>
+        </tr></thead>
+        <tbody>
+          <tr><td class="art-cell">110-1</td><td class="inf-cell">Usage abusif du klaxon</td><td class="amt-cell">120 $</td><td>—</td><td class="agg-cell">—</td></tr>
+          <tr><td class="art-cell">110-2</td><td class="inf-cell">Non-respect des distances de sécurité (1,5 m)</td><td class="amt-cell">120 $</td><td>—</td><td class="agg-cell">230 $ si accident causé — 500 $ si accident avec véhicule d'urgence ou d'État</td></tr>
+          <tr><td class="art-cell">110-3</td><td class="inf-cell">Franchissement d'une ligne continue</td><td class="amt-cell">120 $</td><td>—</td><td class="agg-cell">—</td></tr>
+          <tr><td class="art-cell">110-4</td><td class="inf-cell">Stationnement gênant et/ou interdit</td><td class="amt-cell">200 $</td><td>—</td><td class="agg-cell">800 $ + Saisie (fourrière) si entrave à un accès réservé aux urgences/État</td></tr>
+          <tr><td class="art-cell">110-5</td><td class="inf-cell">Non-respect d'un véhicule prioritaire</td><td class="amt-cell">400 $</td><td>—</td><td class="agg-cell">600 $ si pendant plus d'une minute</td></tr>
+          <tr><td class="art-cell">110-6</td><td class="inf-cell">Conduite dangereuse</td><td class="amt-cell">600 $</td><td>—</td><td class="agg-cell">950 $ + Saisie si sur terrain inapproprié (trottoir, place…)</td></tr>
+          <tr><td class="art-cell">110-7</td><td class="inf-cell">Non-respect d'un feu rouge</td><td class="amt-cell">200 $</td><td>—</td><td class="agg-cell">—</td></tr>
+          <tr><td class="art-cell">110-8</td><td class="inf-cell">Conduite avec véhicule en mauvais état</td><td class="amt-cell">200 $</td><td>—</td><td class="agg-cell">—</td></tr>
+          <tr><td class="art-cell">110-9</td><td class="inf-cell">Demi-tour interdit</td><td class="amt-cell">120 $</td><td>—</td><td class="agg-cell">—</td></tr>
+          <tr><td class="art-cell">110-10</td><td class="inf-cell">Excès de vitesse +5 à +15 km/h</td><td class="amt-cell">70 $</td><td>—</td><td class="agg-cell">—</td></tr>
+          <tr><td class="art-cell">110-11</td><td class="inf-cell">Excès de vitesse +16 à +25 km/h</td><td class="amt-cell">90 $</td><td>—</td><td class="agg-cell">—</td></tr>
+          <tr><td class="art-cell">110-12</td><td class="inf-cell">Excès de vitesse +26 à +35 km/h</td><td class="amt-cell">115 $</td><td>—</td><td class="agg-cell">—</td></tr>
+          <tr><td class="art-cell">110-13</td><td class="inf-cell">Excès de vitesse +36 à +45 km/h</td><td class="amt-cell">150 $</td><td>—</td><td class="agg-cell">—</td></tr>
+          <tr><td class="art-cell">110-14</td><td class="inf-cell">Excès de vitesse +45 km/h et plus</td><td class="amt-cell">500 $</td><td style="color:#E67E22;font-style:italic">🚗 Saisie fourrière</td><td class="agg-cell">—</td></tr>
+          <tr><td class="art-cell">110-15</td><td class="inf-cell">Circulation à contresens</td><td class="amt-cell">400 $</td><td>—</td><td class="agg-cell">950 $ + Saisie si réalisé sur autoroute</td></tr>
+          <tr><td class="art-cell">110-16</td><td class="inf-cell">Entrave à la circulation</td><td class="amt-cell">250 $</td><td>—</td><td class="agg-cell">950 $ + Saisie si réalisé sur autoroute</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- TAB: ARMES -->
+  <div id="tab-armes" style="display:none">
+    <div class="cat-section" style="margin-top:32px">
+      <div class="cat-header" style="border-color:#E74C3C" onclick="toggleCat(this)">
+        <span class="cat-icon">🔫</span>
+        <span class="cat-name">Classification des Armes</span>
+        <span class="cat-count">6 catégories</span>
+        <span class="cat-toggle">▾</span>
+      </div>
+      <div class="armes-grid">
+        <div class="arme-card" style="border-top:2px solid #27AE60">
+          <div class="arme-cat">I</div>
+          <span class="arme-type">Armes blanches & contondantes</span>
+          <div class="arme-name">Armes blanches</div>
+          <div class="arme-exemples">Couteau, poing américain, batte, cran d'arrêt, marteau…</div>
+          <div class="arme-auth auth-civil">✅ Autorisation civile</div>
+          <div class="arme-just">Justification : raison concrète et adéquate requise</div>
+        </div>
+        <div class="arme-card" style="border-top:2px solid #27AE60">
+          <div class="arme-cat">II-A</div>
+          <span class="arme-type">Pistolets semi-automatiques</span>
+          <div class="arme-name">Pistolets légers</div>
+          <div class="arme-exemples">Pistolet, pistolet de combat, pistolet en céramique, pétoire…</div>
+          <div class="arme-auth auth-civil">✅ Autorisation civile</div>
+          <div class="arme-just">Justification : permis de port d'armes civil</div>
+        </div>
+        <div class="arme-card" style="border-top:2px solid #2E86C1">
+          <div class="arme-cat">II-B</div>
+          <span class="arme-type">Pistolets lourds & revolvers</span>
+          <div class="arme-name">Semi-auto calibre sup. & revolvers</div>
+          <div class="arme-exemples">Pistolet lourd, Cal.50, Revolver lourd…</div>
+          <div class="arme-auth auth-fdo">🔵 FDO / État uniquement</div>
+          <div class="arme-just">Justification : permis d'armes d'État + fonction adéquate</div>
+        </div>
+        <div class="arme-card" style="border-top:2px solid #2E86C1">
+          <div class="arme-cat">III</div>
+          <span class="arme-type">Pistolets-mitrailleurs & fusils à pompe</span>
+          <div class="arme-name">Armes à fort cadence</div>
+          <div class="arme-exemples">Tec-9, Skorpion, Gusemberg, fusil à pompe, canon scié…</div>
+          <div class="arme-auth auth-fdo">🔵 FDO / État uniquement</div>
+          <div class="arme-just">Justification : permis d'armes d'État + fonction adéquate</div>
+        </div>
+        <div class="arme-card" style="border-top:2px solid #2E86C1">
+          <div class="arme-cat">IV</div>
+          <span class="arme-type">Fusils d'assaut & fusils de combat</span>
+          <div class="arme-name">Armement de guerre</div>
+          <div class="arme-exemples">Carabine M4, fusil d'assaut AK, fusil compact AK…</div>
+          <div class="arme-auth auth-fdo">🔵 FDO / État uniquement</div>
+          <div class="arme-just">Justification : permis d'armes d'État + fonction adéquate</div>
+        </div>
+        <div class="arme-card" style="border-top:2px solid #2E86C1">
+          <div class="arme-cat">V</div>
+          <span class="arme-type">Pyrotechniques & lançables</span>
+          <div class="arme-name">Engins pyrotechniques</div>
+          <div class="arme-exemples">Cocktails Molotovs, grenades fumigènes…</div>
+          <div class="arme-auth auth-fdo">🔵 FDO / État uniquement</div>
+          <div class="arme-just">Justification : permis d'armes d'État + fonction adéquate</div>
+        </div>
+        <div class="arme-card" style="border-top:2px solid #E74C3C">
+          <div class="arme-cat">VI</div>
+          <span class="arme-type">Explosifs & engins improvisés</span>
+          <div class="arme-name">Armement explosif</div>
+          <div class="arme-exemples">Bombe artisanale, pain de C4…</div>
+          <div class="arme-auth auth-garde">🔴 Garde Nationale exclusivement</div>
+          <div class="arme-just">Justification : autorisation Garde Nationale</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end #main -->
+
+<div id="empty" class="empty" style="display:none">Aucune infraction ne correspond à votre recherche.</div>
+
+<footer>
+  <span class="f-copy">© 2026 Matens &amp; Butler — Code Pénal de Los Santos, État de San Andreas</span>
+  <span class="f-copy">Révision 2026 · Usage interne</span>
+</footer>
+
+<script>
+// TAB SWITCHING
+document.querySelectorAll('.nav-tab').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const tab=btn.dataset.tab;
+    document.getElementById('tab-penal').style.display=tab==='penal'?'block':'none';
+    document.getElementById('tab-route').style.display=tab==='route'?'block':'none';
+    document.getElementById('tab-armes').style.display=tab==='armes'?'block':'none';
+    document.getElementById('filters').style.display=tab==='penal'?'flex':'none';
+    updateCount();
+  });
+});
+
+// CATEGORY COLLAPSE
+function toggleCat(header){
+  header.closest('.cat-section').classList.toggle('collapsed');
+}
+
+// DEFINITION TOGGLE
+function toggleDef(e,btn){
+  e.stopPropagation();
+  const card=btn.closest('.card');
+  const def=card.querySelector('.card-def');
+  def.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+
+// FILTER
+document.querySelectorAll('.filter-chip').forEach(chip=>{
+  chip.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active-chip'));
+    chip.classList.add('active-chip');
+    const f=chip.dataset.filter;
+    document.querySelectorAll('.card').forEach(card=>{
+      if(f==='all'){card.style.display='';return;}
+      card.style.display=card.dataset.type===f?'':'none';
+    });
+    updateCount();
+  });
+});
+
+// SEARCH
+let searchTimeout;
+document.getElementById('search').addEventListener('input',function(){
+  clearTimeout(searchTimeout);
+  searchTimeout=setTimeout(()=>{
+    const q=this.value.toLowerCase().trim();
+    if(!q){
+      document.querySelectorAll('.card').forEach(c=>c.style.display='');
+      document.querySelectorAll('.route-table tbody tr').forEach(r=>r.style.display='');
+      document.querySelectorAll('.cat-section').forEach(s=>s.classList.remove('collapsed'));
+      updateCount();return;
+    }
+    document.querySelectorAll('.card').forEach(card=>{
+      const txt=card.innerText.toLowerCase();
+      card.style.display=txt.includes(q)?'':'none';
+    });
+    document.querySelectorAll('.route-table tbody tr').forEach(row=>{
+      const txt=row.innerText.toLowerCase();
+      row.style.display=txt.includes(q)?'':'none';
+    });
+    // expand all cats
+    document.querySelectorAll('.cat-section').forEach(s=>s.classList.remove('collapsed'));
+    updateCount();
+  },200);
+});
+
+// COUNT
+function updateCount(){
+  const tabPenal=document.getElementById('tab-penal').style.display!=='none';
+  const tabRoute=document.getElementById('tab-route').style.display!=='none';
+  let count=0;
+  if(tabPenal) count=document.querySelectorAll('#tab-penal .card:not([style*="display: none"]):not([style*="display:none"])').length;
+  if(tabRoute) count=document.querySelectorAll('#tab-route tbody tr:not([style*="display: none"]):not([style*="display:none"])').length;
+  document.getElementById('count-num').textContent=count||'—';
+}
+updateCount();
+
+// OPEN CARD (do nothing extra, just for cursor)
+function openCard(card){
+  // Could add modal later
+}
+</script>
+</body>
+</html>

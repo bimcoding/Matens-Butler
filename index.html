@@ -567,6 +567,76 @@ nav.solid{
 }
 .practice-item:hover .pi-arrow{opacity:1;transform:translateX(0)}
 
+/* CODE PÉNAL PROMO */
+#code-penal-promo{
+  padding:120px 64px;
+  background:var(--sepia);
+  border-top:1px solid rgba(212,175,80,.08);
+  border-bottom:1px solid rgba(212,175,80,.08);
+  position:relative;overflow:hidden;
+}
+#code-penal-promo::before{
+  content:'';position:absolute;inset:0;
+  background:
+    repeating-linear-gradient(0deg,transparent,transparent 44px,rgba(212,175,80,.025) 44px,rgba(212,175,80,.025) 45px),
+    repeating-linear-gradient(90deg,transparent,transparent 44px,rgba(212,175,80,.025) 44px,rgba(212,175,80,.025) 45px);
+}
+.cpp-inner{
+  max-width:1100px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+  position:relative;z-index:1;
+}
+.cpp-text{
+  font-family:'Sorts Mill Goudy',Georgia,serif;
+  font-size:16px;line-height:1.85;
+  color:var(--ivory-dim);
+  margin:28px 0 32px;
+}
+.cpp-tags{
+  display:flex;flex-wrap:wrap;gap:10px;
+  margin-bottom:40px;
+}
+.cpp-tag{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.35em;text-transform:uppercase;
+  color:var(--bronze);
+  border:1px solid rgba(139,105,20,.35);
+  padding:7px 14px;
+}
+.cpp-btn{display:inline-block}
+.cpp-right{
+  display:flex;align-items:center;justify-content:center;
+}
+.cpp-emblem{
+  position:relative;
+  width:280px;height:280px;
+  display:flex;align-items:center;justify-content:center;
+}
+.cpp-emblem-ring{
+  position:absolute;border-radius:50%;border:1px solid rgba(212,175,80,.18);
+}
+.cpp-emblem-ring--1{inset:0}
+.cpp-emblem-ring--2{inset:20px;border-color:rgba(212,175,80,.1)}
+.cpp-emblem-inner{
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  text-align:center;
+}
+.cpp-scales{
+  font-size:56px;
+  filter:sepia(1) saturate(1.5) brightness(.85);
+}
+.cpp-emblem-title{
+  font-family:'DM Serif Display',serif;
+  font-size:15px;letter-spacing:.12em;
+  color:var(--bronze-bright);
+}
+.cpp-emblem-sub{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.45em;text-transform:uppercase;
+  color:var(--bronze);
+}
+
 /* TEAM */
 #team{
   padding:120px 64px;
@@ -1094,6 +1164,8 @@ footer{
   .awards-header{gap:48px}
   #certifications{padding:60px 32px}
   #practice{padding:80px 32px}
+  #code-penal-promo{padding:80px 32px}
+  .cpp-inner{gap:48px}
   #team{padding:80px 32px}
   #testimonials{padding:80px 32px}
   #contact{padding:80px 32px;gap:60px}
@@ -1126,6 +1198,10 @@ footer{
   #practice{padding:72px 24px}
   .practice-item{grid-template-columns:44px 1fr;gap:18px;padding:26px 20px}
   .pi-arrow{display:none}
+
+  #code-penal-promo{padding:72px 24px}
+  .cpp-inner{grid-template-columns:1fr;gap:48px}
+  .cpp-right{display:none}
 
   #team{padding:72px 24px}
   .team-duo{grid-template-columns:1fr;gap:28px;margin-bottom:32px}
@@ -1195,6 +1271,7 @@ footer{
     <li><a href="#about">Le Cabinet</a></li>
     <li><a href="#awards">Distinctions</a></li>
     <li><a href="#practice">Domaines</a></li>
+    <li><a href="code_penal.html">Code Pénal</a></li>
     <li><a href="#team">Associés</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#vision">Vision</a></li>
@@ -1470,6 +1547,35 @@ footer{
         <div class="pi-desc">Résolution de conflits internationaux. Pionnier en médiation digitale, primé par l'ILSA pour l'innovation dans ce domaine.</div>
       </div>
       <span class="pi-arrow">Consulter →</span>
+    </div>
+  </div>
+</section>
+
+<!-- CODE PÉNAL PROMO -->
+<section id="code-penal-promo">
+  <div class="cpp-inner reveal">
+    <div class="cpp-left">
+      <div class="section-tag">Ressource Juridique</div>
+      <h2 class="section-title">Code Pénal<br>de <em>Los Santos</em></h2>
+      <p class="cpp-text">Consultez le corpus législatif pénal complet de l'État de San Andreas — infractions, classifications, peines encourues et procédures applicables. Un outil de référence mis à disposition par Matens & Butler pour tout justiciable ou professionnel du droit souhaitant s'informer sur le cadre légal en vigueur.</p>
+      <div class="cpp-tags">
+        <span class="cpp-tag">Homicides &amp; Violences</span>
+        <span class="cpp-tag">Infractions Routières</span>
+        <span class="cpp-tag">Crimes contre l'Autorité</span>
+        <span class="cpp-tag">Peines &amp; Amendes</span>
+      </div>
+      <a href="code_penal.html" class="btn-gold cpp-btn">Consulter le Code Pénal →</a>
+    </div>
+    <div class="cpp-right">
+      <div class="cpp-emblem">
+        <div class="cpp-emblem-ring cpp-emblem-ring--1"></div>
+        <div class="cpp-emblem-ring cpp-emblem-ring--2"></div>
+        <div class="cpp-emblem-inner">
+          <div class="cpp-scales">⚖</div>
+          <div class="cpp-emblem-title">Codex Penalis</div>
+          <div class="cpp-emblem-sub">San Andreas · MMXXVI</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1830,7 +1936,7 @@ footer{
     <div class="f-col reveal">
       <h4>Domaines</h4>
       <ul>
-        <li><a href="#">Droit Pénal</a></li>
+        <li><a href="code_penal.html">Droit Pénal</a></li>
         <li><a href="#">Divertissement</a></li>
         <li><a href="#">Affaires & M&A</a></li>
         <li><a href="#">Immobilier</a></li>
