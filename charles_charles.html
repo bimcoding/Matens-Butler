@@ -1,0 +1,1871 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matens & Butler — Cabinet d'Avocats — Vinewood, Los Santos</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Didact+Gothic&family=Sorts+Mill+Goudy:ital@0;1&family=Josefin+Sans:wght@100;200;300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --ivory:#F0EBE0;
+  --ivory-dim:#C8C2B4;
+  --ivory-pale:#FAF7F2;
+  --charcoal:#18160F;
+  --ink:#1E1B12;
+  --sepia:#2A2519;
+  --warm:#332E22;
+  --mid:#443D2E;
+  --bronze:#8B6914;
+  --bronze-light:#C09A30;
+  --bronze-bright:#D4AF50;
+  --bronze-pale:#EDD98A;
+  --red:#8B1A1A;
+  --red-soft:#A52525;
+}
+
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  background:var(--charcoal);
+  color:var(--ivory);
+  font-family:'Sorts Mill Goudy',Georgia,serif;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* CURSOR */
+#cur{position:fixed;width:8px;height:8px;background:var(--bronze-bright);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s}
+#cur-o{position:fixed;width:32px;height:32px;border:1px solid rgba(212,175,80,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .15s ease}
+body:hover #cur-o{opacity:1}
+
+/* PRELOADER */
+#preloader{
+  position:fixed;inset:0;
+  background:var(--charcoal);
+  z-index:1000;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:24px;
+  transition:opacity .8s ease;
+}
+#preloader.done{opacity:0;pointer-events:none}
+.pre-logo{
+  font-family:'DM Serif Display',serif;
+  font-size:42px;
+  color:var(--bronze-bright);
+  letter-spacing:.05em;
+  opacity:0;
+  animation:preIn .8s .3s forwards;
+}
+.pre-line{
+  width:0;height:1px;
+  background:var(--bronze-bright);
+  animation:preLine 1.2s .6s ease forwards;
+}
+.pre-sub{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:9px;letter-spacing:.5em;
+  text-transform:uppercase;
+  color:var(--ivory-dim);
+  opacity:0;
+  animation:preIn .6s 1s forwards;
+}
+@keyframes preIn{to{opacity:1}}
+@keyframes preLine{to{width:200px}}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;
+  z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:24px 64px;
+  transition:all .5s;
+}
+nav.solid{
+  background:rgba(24,22,15,.96);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(212,175,80,.1);
+  padding:16px 64px;
+}
+.nav-wordmark{
+  display:flex;flex-direction:column;
+  text-decoration:none;
+}
+.nav-wordmark-main{
+  font-family:'DM Serif Display',serif;
+  font-size:20px;
+  color:var(--ivory-pale);
+  letter-spacing:.02em;
+  line-height:1;
+}
+.nav-wordmark-main span{color:var(--bronze-bright)}
+.nav-wordmark-sub{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:7.5px;letter-spacing:.55em;
+  text-transform:uppercase;
+  color:var(--bronze);
+  margin-top:4px;
+}
+.nav-center{
+  display:flex;gap:40px;list-style:none;
+  position:absolute;left:50%;transform:translateX(-50%);
+}
+.nav-center a{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:9px;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--ivory-dim);
+  text-decoration:none;
+  transition:color .3s;
+  position:relative;
+  padding-bottom:3px;
+}
+.nav-center a::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;
+  height:1px;background:var(--bronze-bright);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .3s ease;
+}
+.nav-center a:hover{color:var(--bronze-pale)}
+.nav-center a:hover::after{transform:scaleX(1)}
+.nav-btn{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8.5px;letter-spacing:.35em;text-transform:uppercase;
+  color:var(--charcoal);background:var(--bronze-bright);
+  padding:11px 26px;text-decoration:none;
+  transition:background .3s;
+  cursor:none;
+}
+.nav-btn:hover{background:var(--bronze-pale)}
+
+/* HERO */
+#hero{
+  min-height:100vh;
+  display:grid;grid-template-columns:1fr 1fr;
+  position:relative;overflow:hidden;
+}
+.hero-left{
+  padding:160px 60px 80px 64px;
+  display:flex;flex-direction:column;justify-content:center;
+  position:relative;z-index:2;
+}
+.hero-right{
+  position:relative;overflow:hidden;
+}
+.hero-right-bg{
+  position:absolute;inset:0;
+  background:var(--sepia);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.hero-right-bg::before{
+  content:'';
+  position:absolute;inset:0;
+  background:
+    repeating-linear-gradient(0deg,transparent,transparent 44px,rgba(212,175,80,.04) 44px,rgba(212,175,80,.04) 45px),
+    repeating-linear-gradient(90deg,transparent,transparent 44px,rgba(212,175,80,.04) 44px,rgba(212,175,80,.04) 45px);
+}
+.hero-seal{
+  width:260px;height:260px;
+  border:1px solid rgba(212,175,80,.2);
+  border-radius:50%;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  position:relative;
+}
+.hero-seal::before{
+  content:'';
+  position:absolute;inset:12px;
+  border:1px solid rgba(212,175,80,.1);
+  border-radius:50%;
+}
+.hero-seal::after{
+  content:'';
+  position:absolute;inset:24px;
+  border:1px dashed rgba(212,175,80,.08);
+  border-radius:50%;
+}
+.seal-year{
+  font-family:'DM Serif Display',serif;
+  font-size:54px;color:var(--bronze-bright);
+  line-height:1;
+  display:block;
+}
+.seal-est{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.5em;
+  text-transform:uppercase;
+  color:var(--ivory-dim);
+  display:block;margin-top:4px;
+}
+.seal-name{
+  font-family:'DM Serif Display',serif;
+  font-size:13px;color:var(--ivory-pale);
+  display:block;margin-top:10px;
+  letter-spacing:.05em;
+}
+.seal-divider{
+  width:40px;height:1px;
+  background:rgba(212,175,80,.3);
+  margin:10px auto;
+}
+.seal-city{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:7px;letter-spacing:.4em;
+  text-transform:uppercase;
+  color:var(--bronze);
+  display:block;
+}
+
+.hero-strip{
+  position:absolute;right:0;top:0;bottom:0;
+  width:8px;
+  background:linear-gradient(to bottom,var(--bronze) 0%,var(--bronze-bright) 50%,var(--bronze) 100%);
+}
+
+.hero-eyebrow{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8.5px;letter-spacing:.5em;text-transform:uppercase;
+  color:var(--bronze);
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:36px;
+  opacity:0;animation:slideUp .7s .2s forwards;
+}
+.hero-eyebrow::before{content:'';width:40px;height:1px;background:var(--bronze)}
+
+.hero-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(48px,5.5vw,86px);
+  line-height:.92;
+  color:var(--ivory-pale);
+  margin-bottom:8px;
+  opacity:0;animation:slideUp .8s .35s forwards;
+}
+.hero-title .cc{
+  display:block;
+  background:linear-gradient(135deg,var(--bronze-light),var(--bronze-bright),var(--bronze-pale));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  font-style:italic;
+}
+.hero-title .amp{
+  font-size:.5em;font-style:normal;
+  -webkit-text-fill-color:var(--ivory-dim);
+  vertical-align:.1em;
+}
+
+.hero-desc{
+  font-size:18px;font-style:italic;
+  color:var(--ivory-dim);
+  max-width:420px;
+  line-height:1.8;
+  margin:32px 0 48px;
+  opacity:0;animation:slideUp .8s .5s forwards;
+}
+
+.hero-actions{
+  display:flex;align-items:center;gap:28px;
+  opacity:0;animation:slideUp .7s .65s forwards;
+}
+.btn-gold{
+  display:inline-block;
+  font-family:'Josefin Sans',sans-serif;
+  font-size:9px;letter-spacing:.35em;text-transform:uppercase;
+  color:var(--charcoal);
+  background:linear-gradient(135deg,var(--bronze-light),var(--bronze-bright));
+  padding:16px 40px;text-decoration:none;
+  position:relative;overflow:hidden;
+  transition:opacity .3s;cursor:none;
+}
+.btn-gold:hover{opacity:.88}
+.btn-ghost{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:9px;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--ivory-dim);text-decoration:none;
+  border-bottom:1px solid rgba(200,194,180,.3);
+  padding-bottom:3px;transition:color .3s,border-color .3s;
+  cursor:none;
+}
+.btn-ghost:hover{color:var(--bronze-pale);border-color:var(--bronze-pale)}
+
+.hero-scroll{
+  position:absolute;bottom:40px;left:64px;
+  display:flex;align-items:center;gap:12px;
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--bronze);
+  opacity:0;animation:fadeIn 1s 1.2s forwards;
+}
+.hero-scroll::after{
+  content:'';width:60px;height:1px;
+  background:var(--bronze);animation:growLine 1.2s 1.5s ease forwards;
+  width:0;
+}
+@keyframes growLine{to{width:60px}}
+
+@keyframes slideUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{to{opacity:1}}
+
+/* AWARDS TICKER */
+#ticker{
+  background:var(--bronze-bright);
+  padding:13px 0;
+  overflow:hidden;
+  white-space:nowrap;
+}
+.ticker-track{
+  display:inline-flex;gap:0;
+  animation:ticker 30s linear infinite;
+}
+.ticker-item{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:9px;letter-spacing:.35em;text-transform:uppercase;
+  color:var(--charcoal);
+  padding:0 48px;
+  display:inline-flex;align-items:center;gap:14px;
+}
+.ticker-item::before{content:'◆';font-size:7px;opacity:.6}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* STATS */
+#stats{
+  background:var(--ink);
+  padding:80px 64px;
+  display:grid;grid-template-columns:repeat(5,1fr);
+  border-bottom:1px solid rgba(212,175,80,.07);
+}
+.stat{
+  padding:32px 24px;
+  border-right:1px solid rgba(212,175,80,.08);
+  text-align:center;
+}
+.stat:last-child{border-right:none}
+.stat-n{
+  font-family:'DM Serif Display',serif;
+  font-size:48px;color:var(--bronze-bright);
+  line-height:1;display:block;
+}
+.stat-l{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.35em;text-transform:uppercase;
+  color:var(--ivory-dim);
+  margin-top:10px;display:block;
+  line-height:1.6;
+}
+
+/* ABOUT */
+#about{
+  padding:120px 64px;
+  background:var(--sepia);
+  display:grid;grid-template-columns:1fr 1.2fr;
+  gap:100px;align-items:start;
+}
+.about-left{position:sticky;top:120px}
+.section-tag{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.5em;text-transform:uppercase;
+  color:var(--bronze);
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:20px;
+}
+.section-tag::before{content:'';width:32px;height:1px;background:var(--bronze)}
+.section-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(34px,3.5vw,54px);
+  line-height:1.05;
+  color:var(--ivory-pale);
+  margin-bottom:24px;
+}
+.section-title em{font-style:italic;color:var(--bronze-light)}
+.section-body{
+  font-size:17px;font-style:italic;
+  color:var(--ivory-dim);
+  line-height:1.85;max-width:480px;
+}
+.about-timeline{display:flex;flex-direction:column;gap:0}
+.tl-item{
+  display:grid;grid-template-columns:80px 1px 1fr;
+  gap:0 24px;
+  padding-bottom:48px;
+  position:relative;
+}
+.tl-item:last-child{padding-bottom:0}
+.tl-year{
+  font-family:'DM Serif Display',serif;
+  font-size:22px;color:var(--bronze-bright);
+  text-align:right;padding-top:4px;
+}
+.tl-line{
+  background:rgba(212,175,80,.15);
+  position:relative;
+}
+.tl-line::before{
+  content:'';
+  position:absolute;top:8px;left:50%;transform:translateX(-50%);
+  width:9px;height:9px;
+  border:1px solid var(--bronze-bright);
+  background:var(--sepia);
+  border-radius:50%;
+}
+.tl-content{padding-top:2px}
+.tl-title{
+  font-family:'DM Serif Display',serif;
+  font-size:18px;color:var(--ivory-pale);
+  margin-bottom:6px;
+}
+.tl-desc{
+  font-size:14px;font-style:italic;
+  color:var(--ivory-dim);line-height:1.7;
+}
+.tl-badge{
+  display:inline-block;
+  font-family:'Josefin Sans',sans-serif;
+  font-size:7px;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--bronze-bright);
+  border:1px solid rgba(212,175,80,.3);
+  padding:4px 10px;margin-top:10px;
+}
+
+/* AWARDS */
+#awards{
+  padding:120px 64px;
+  background:var(--charcoal);
+}
+.awards-header{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:end;
+  margin-bottom:80px;
+}
+.awards-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;
+  background:rgba(212,175,80,.08);
+}
+.award-card{
+  background:var(--ink);
+  padding:44px 36px;
+  position:relative;overflow:hidden;
+  transition:background .4s;
+  cursor:none;
+}
+.award-card::after{
+  content:'';
+  position:absolute;top:0;left:0;right:0;
+  height:2px;
+  background:linear-gradient(to right,var(--bronze),var(--bronze-bright));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .4s ease;
+}
+.award-card:hover{background:var(--warm)}
+.award-card:hover::after{transform:scaleX(1)}
+.award-icon{
+  font-size:28px;display:block;
+  margin-bottom:20px;
+  filter:saturate(.5) brightness(.9);
+  transition:filter .3s;
+}
+.award-card:hover .award-icon{filter:saturate(1) brightness(1.1)}
+.award-year{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--bronze);display:block;margin-bottom:12px;
+}
+.award-name{
+  font-family:'DM Serif Display',serif;
+  font-size:18px;color:var(--ivory-pale);
+  margin-bottom:10px;line-height:1.2;
+}
+.award-by{
+  font-size:13px;font-style:italic;color:var(--ivory-dim);
+  line-height:1.6;
+}
+.award-ribbon{
+  position:absolute;top:16px;right:16px;
+  font-family:'Josefin Sans',sans-serif;
+  font-size:7px;letter-spacing:.2em;text-transform:uppercase;
+  background:rgba(212,175,80,.12);
+  color:var(--bronze-pale);
+  padding:4px 8px;border:1px solid rgba(212,175,80,.2);
+}
+
+/* CERTIFICATIONS */
+#certifications{
+  background:var(--sepia);
+  padding:80px 64px;
+}
+.cert-grid{
+  display:flex;flex-wrap:wrap;gap:16px;
+  margin-top:48px;
+}
+.cert-badge{
+  display:inline-flex;align-items:center;gap:14px;
+  border:1px solid rgba(212,175,80,.2);
+  padding:16px 24px;
+  background:rgba(212,175,80,.03);
+  transition:border-color .3s,background .3s;
+  cursor:none;
+}
+.cert-badge:hover{border-color:rgba(212,175,80,.5);background:rgba(212,175,80,.07)}
+.cert-icon{font-size:20px}
+.cert-info{}
+.cert-name{
+  font-family:'DM Serif Display',serif;
+  font-size:15px;color:var(--ivory-pale);
+  display:block;line-height:1.2;
+}
+.cert-org{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--bronze);display:block;margin-top:4px;
+}
+
+/* PRACTICE */
+#practice{
+  padding:120px 64px;
+  background:var(--ink);
+}
+.practice-header{margin-bottom:72px}
+.practice-list{display:flex;flex-direction:column;gap:1px;background:rgba(212,175,80,.06)}
+.practice-item{
+  background:var(--charcoal);
+  display:grid;grid-template-columns:60px 1fr auto;
+  align-items:center;
+  gap:32px;
+  padding:36px 44px;
+  cursor:none;
+  transition:background .3s;
+  position:relative;overflow:hidden;
+}
+.practice-item::before{
+  content:'';
+  position:absolute;left:0;top:0;bottom:0;
+  width:3px;background:var(--bronze-bright);
+  transform:scaleY(0);transition:transform .3s ease;
+}
+.practice-item:hover{background:var(--sepia)}
+.practice-item:hover::before{transform:scaleY(1)}
+.pi-num{
+  font-family:'DM Serif Display',serif;
+  font-size:30px;color:rgba(212,175,80,.2);
+  line-height:1;
+}
+.pi-content{}
+.pi-name{
+  font-family:'DM Serif Display',serif;
+  font-size:24px;color:var(--ivory-pale);
+  margin-bottom:6px;
+}
+.pi-desc{
+  font-size:15px;font-style:italic;color:var(--ivory-dim);
+  line-height:1.6;
+}
+.pi-arrow{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:9px;letter-spacing:.2em;
+  color:var(--bronze-bright);
+  opacity:0;transform:translateX(-8px);
+  transition:all .3s;
+}
+.practice-item:hover .pi-arrow{opacity:1;transform:translateX(0)}
+
+/* TEAM */
+#team{
+  padding:120px 64px;
+  background:var(--sepia);
+}
+.team-header{margin-bottom:72px}
+.team-duo{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:48px;margin-bottom:60px;
+}
+.team-assoc{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:24px;
+}
+.partner-card{
+  position:relative;
+  border:1px solid rgba(212,175,80,.1);
+  background:var(--warm);
+  overflow:hidden;
+  transition:border-color .4s;
+}
+.partner-card:hover{border-color:rgba(212,175,80,.4)}
+.partner-photo{
+  width:100%;aspect-ratio:1/1.1;
+  background:var(--mid);
+  position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.partner-initials{
+  font-family:'DM Serif Display',serif;
+  font-size:52px;color:rgba(212,175,80,.2);
+  position:relative;z-index:1;
+}
+.partner-photo::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    -45deg,transparent,transparent 16px,
+    rgba(212,175,80,.02) 16px,rgba(212,175,80,.02) 17px
+  );
+}
+.partner-photo-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(24,22,15,.95) 0%,transparent 50%);
+  opacity:0;transition:opacity .4s;
+  display:flex;align-items:flex-end;padding:24px;
+}
+.partner-card:hover .partner-photo-overlay{opacity:1}
+.partner-photo-overlay p{font-size:13px;font-style:italic;color:var(--ivory-dim);line-height:1.6}
+.partner-body{padding:24px 28px 28px}
+.partner-name{font-family:'DM Serif Display',serif;font-size:24px;color:var(--ivory-pale);margin-bottom:4px}
+.partner-title{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.35em;text-transform:uppercase;
+  color:var(--bronze-bright);display:block;margin-bottom:14px;
+}
+.partner-bar{width:36px;height:1px;background:rgba(212,175,80,.25);margin-bottom:10px}
+.partner-spec{font-size:13px;font-style:italic;color:var(--ivory-dim)}
+
+.assoc-card{
+  border:1px solid rgba(212,175,80,.08);
+  background:var(--ink);
+  padding:24px 28px;
+  transition:border-color .3s,background .3s;
+}
+.assoc-card:hover{border-color:rgba(212,175,80,.3);background:var(--warm)}
+.assoc-name{font-family:'DM Serif Display',serif;font-size:18px;color:var(--ivory-pale);margin-bottom:4px}
+.assoc-title{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:7.5px;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--bronze);display:block;margin-bottom:10px;
+}
+.assoc-spec{font-size:13px;font-style:italic;color:var(--ivory-dim)}
+
+/* TESTIMONIALS */
+#testimonials{
+  padding:120px 64px;
+  background:var(--charcoal);
+  position:relative;overflow:hidden;
+}
+.test-bg-text{
+  position:absolute;
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  font-family:'DM Serif Display',serif;
+  font-size:360px;font-style:italic;
+  color:rgba(212,175,80,.018);
+  white-space:nowrap;pointer-events:none;user-select:none;
+}
+.test-inner{max-width:860px;margin:0 auto;text-align:center;position:relative;z-index:1}
+.test-slider{min-height:240px;position:relative}
+.test-item{display:none;animation:fadeIn .5s ease}
+.test-item.active{display:block}
+.test-stars{
+  display:flex;justify-content:center;gap:6px;
+  margin-bottom:32px;
+}
+.test-stars span{color:var(--bronze-bright);font-size:16px}
+.test-quote{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(18px,2.2vw,26px);
+  font-style:italic;
+  color:var(--ivory-pale);
+  line-height:1.6;
+  margin-bottom:36px;
+  position:relative;
+}
+.test-quote::before{
+  content:'\201C';
+  font-size:100px;color:var(--bronze);opacity:.25;
+  line-height:0;vertical-align:-44px;
+  margin-right:6px;
+}
+.test-auth{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:9px;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--bronze-bright);
+}
+.test-auth span{display:block;color:var(--ivory-dim);font-size:8px;letter-spacing:.3em;margin-top:5px}
+.test-dots{display:flex;justify-content:center;gap:10px;margin-top:48px}
+.tdot{
+  width:5px;height:5px;border-radius:50%;
+  background:rgba(212,175,80,.25);
+  border:none;cursor:none;transition:background .3s;padding:0;
+}
+.tdot.active{background:var(--bronze-bright)}
+
+/* CONTACT */
+#contact{
+  padding:120px 64px;
+  background:var(--sepia);
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:100px;align-items:start;
+}
+.contact-info{position:sticky;top:120px}
+.contact-item{
+  display:flex;gap:20px;align-items:flex-start;
+  padding:24px 0;
+  border-bottom:1px solid rgba(212,175,80,.08);
+}
+.contact-item:first-child{border-top:1px solid rgba(212,175,80,.08)}
+.ci-icon{font-size:20px;margin-top:2px;flex-shrink:0}
+.ci-body{}
+.ci-label{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--bronze);display:block;margin-bottom:6px;
+}
+.ci-val{font-size:16px;font-style:italic;color:var(--ivory-pale);line-height:1.6}
+
+.contact-form{display:flex;flex-direction:column;gap:18px}
+.cf-title{
+  font-family:'DM Serif Display',serif;
+  font-size:28px;color:var(--ivory-pale);
+  margin-bottom:4px;
+}
+.cf-sub{font-size:14px;font-style:italic;color:var(--ivory-dim);margin-bottom:8px}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cf-group{display:flex;flex-direction:column;gap:7px}
+.cf-label{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.35em;text-transform:uppercase;
+  color:var(--ivory-dim);
+}
+.cf-input,.cf-select,.cf-textarea{
+  background:rgba(212,175,80,.04);
+  border:1px solid rgba(212,175,80,.14);
+  color:var(--ivory);
+  padding:13px 16px;
+  font-family:'Sorts Mill Goudy',serif;
+  font-size:15px;
+  outline:none;
+  transition:border-color .3s;
+  cursor:none;
+}
+.cf-input:focus,.cf-select:focus,.cf-textarea:focus{border-color:rgba(212,175,80,.45)}
+.cf-textarea{min-height:110px;resize:vertical}
+.cf-select option{background:var(--warm);color:var(--ivory)}
+.cf-submit{
+  display:inline-flex;align-items:center;gap:14px;
+  font-family:'Josefin Sans',sans-serif;
+  font-size:9px;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--charcoal);
+  background:linear-gradient(135deg,var(--bronze-light),var(--bronze-bright));
+  border:none;padding:17px 40px;
+  cursor:none;transition:opacity .3s;
+  align-self:flex-start;
+}
+.cf-submit:hover{opacity:.85}
+.cf-note{font-size:12px;font-style:italic;color:var(--ivory-dim);margin-top:4px}
+
+/* FOOTER */
+footer{
+  background:var(--charcoal);
+  border-top:1px solid rgba(212,175,80,.08);
+  padding:80px 64px 40px;
+}
+.footer-top{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:56px;
+  padding-bottom:56px;
+  border-bottom:1px solid rgba(212,175,80,.06);
+}
+.f-brand-name{
+  font-family:'DM Serif Display',serif;
+  font-size:24px;color:var(--ivory-pale);
+  margin-bottom:2px;
+}
+.f-brand-name em{font-style:italic;color:var(--bronze-bright)}
+.f-brand-sub{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:7.5px;letter-spacing:.5em;text-transform:uppercase;
+  color:var(--bronze);margin-bottom:20px;display:block;
+}
+.f-brand-desc{font-size:14px;font-style:italic;color:var(--ivory-dim);line-height:1.8;max-width:260px}
+.f-col h4{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--bronze-bright);margin-bottom:20px;
+}
+.f-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.f-col a{font-size:14px;font-style:italic;color:var(--ivory-dim);text-decoration:none;transition:color .3s}
+.f-col a:hover{color:var(--bronze-pale)}
+.f-col address{font-style:italic;font-size:14px;color:var(--ivory-dim);line-height:2}
+.footer-bottom{
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:28px;
+}
+.f-copy{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--ivory-dim);
+}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .9s ease,transform .9s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-24px);transition:opacity .9s ease,transform .9s ease}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--charcoal)}
+::-webkit-scrollbar-thumb{background:rgba(212,175,80,.3);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--bronze-bright)}
+
+/* ============================================================
+   PAGE VISION — OBJECTIFS & BESOINS
+   ============================================================ */
+
+/* HERO VISION */
+#vision-hero{
+  min-height:52vh;
+  background:var(--ink);
+  display:flex;align-items:flex-end;
+  padding:0 64px 80px;
+  position:relative;
+  overflow:hidden;
+  border-top:1px solid rgba(212,175,80,.08);
+}
+#vision-hero::before{
+  content:'VISION 2026';
+  position:absolute;
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  font-family:'DM Serif Display',serif;
+  font-size:200px;font-style:italic;
+  color:rgba(212,175,80,.025);
+  white-space:nowrap;pointer-events:none;user-select:none;
+  letter-spacing:-.02em;
+}
+.vh-inner{position:relative;z-index:1;max-width:760px}
+.vh-tag{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8.5px;letter-spacing:.55em;text-transform:uppercase;
+  color:var(--bronze);
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:24px;
+}
+.vh-tag::before{content:'';width:40px;height:1px;background:var(--bronze);flex-shrink:0}
+.vh-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(44px,5vw,80px);
+  line-height:.95;color:var(--ivory-pale);
+  margin-bottom:20px;
+}
+.vh-title em{font-style:italic;color:var(--bronze-bright)}
+.vh-desc{
+  font-size:18px;font-style:italic;
+  color:var(--ivory-dim);line-height:1.8;
+  max-width:560px;
+}
+.vh-line{
+  position:absolute;right:64px;top:0;bottom:0;
+  width:1px;
+  background:linear-gradient(to bottom,transparent,rgba(212,175,80,.2),transparent);
+}
+
+/* OBJECTIFS */
+#objectifs{
+  background:var(--sepia);
+  padding:100px 64px;
+}
+.obj-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:2px;
+  background:rgba(212,175,80,.07);
+  margin-top:64px;
+}
+.obj-col{
+  background:var(--charcoal);
+  padding:52px 44px 56px;
+  position:relative;
+  overflow:hidden;
+}
+.obj-col::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;
+  height:3px;
+}
+.obj-col.court::before{background:linear-gradient(to right,var(--bronze-bright),var(--bronze-pale))}
+.obj-col.moyen::before{background:linear-gradient(to right,var(--bronze),var(--bronze-bright))}
+.obj-col.long::before{background:linear-gradient(to right,rgba(212,175,80,.4),var(--bronze))}
+
+.obj-horizon{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.5em;text-transform:uppercase;
+  display:inline-flex;align-items:center;gap:10px;
+  padding:6px 14px;margin-bottom:28px;
+  border:1px solid;
+}
+.obj-col.court .obj-horizon{color:var(--bronze-bright);border-color:rgba(212,175,80,.3);background:rgba(212,175,80,.06)}
+.obj-col.moyen .obj-horizon{color:var(--bronze-light);border-color:rgba(192,154,48,.25);background:rgba(192,154,48,.05)}
+.obj-col.long  .obj-horizon{color:var(--ivory-dim);border-color:rgba(200,194,180,.15);background:rgba(200,194,180,.03)}
+
+.obj-period{
+  font-family:'DM Serif Display',serif;
+  font-size:28px;color:var(--ivory-pale);
+  margin-bottom:6px;display:block;
+}
+.obj-timespan{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.35em;text-transform:uppercase;
+  color:var(--ivory-dim);display:block;margin-bottom:36px;
+}
+.obj-list{display:flex;flex-direction:column;gap:20px}
+.obj-item{
+  display:flex;gap:16px;align-items:flex-start;
+  padding-bottom:20px;
+  border-bottom:1px solid rgba(212,175,80,.07);
+}
+.obj-item:last-child{border-bottom:none;padding-bottom:0}
+.obj-dot{
+  width:6px;height:6px;border-radius:50%;
+  flex-shrink:0;margin-top:8px;
+}
+.obj-col.court .obj-dot{background:var(--bronze-bright)}
+.obj-col.moyen .obj-dot{background:var(--bronze-light)}
+.obj-col.long  .obj-dot{background:rgba(212,175,80,.4)}
+.obj-item-body{}
+.obj-item-title{
+  font-family:'DM Serif Display',serif;
+  font-size:17px;color:var(--ivory-pale);
+  margin-bottom:4px;line-height:1.2;
+}
+.obj-item-desc{
+  font-size:14px;font-style:italic;
+  color:var(--ivory-dim);line-height:1.65;
+}
+.obj-item-tag{
+  display:inline-block;
+  font-family:'Josefin Sans',sans-serif;
+  font-size:7px;letter-spacing:.25em;text-transform:uppercase;
+  padding:3px 8px;margin-top:8px;
+  border:1px solid rgba(212,175,80,.2);
+  color:var(--bronze);
+}
+
+/* BESOINS */
+#besoins{
+  background:var(--ink);
+  padding:100px 64px;
+}
+.besoins-header{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:end;margin-bottom:72px;
+}
+.besoins-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:2px;
+  background:rgba(212,175,80,.07);
+}
+.besoin-card{
+  background:var(--charcoal);
+  padding:52px 48px;
+  position:relative;overflow:hidden;
+  transition:background .4s;cursor:none;
+}
+.besoin-card::after{
+  content:'';
+  position:absolute;bottom:0;left:0;right:0;
+  height:2px;
+  background:linear-gradient(to right,var(--bronze),var(--bronze-bright));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .5s ease;
+}
+.besoin-card:hover{background:var(--sepia)}
+.besoin-card:hover::after{transform:scaleX(1)}
+.besoin-number{
+  font-family:'DM Serif Display',serif;
+  font-size:72px;font-style:italic;
+  color:rgba(212,175,80,.06);
+  position:absolute;top:16px;right:24px;
+  line-height:1;pointer-events:none;
+  transition:color .4s;
+}
+.besoin-card:hover .besoin-number{color:rgba(212,175,80,.1)}
+.besoin-icon{font-size:36px;display:block;margin-bottom:24px}
+.besoin-cat{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--bronze);display:block;margin-bottom:12px;
+}
+.besoin-title{
+  font-family:'DM Serif Display',serif;
+  font-size:26px;color:var(--ivory-pale);
+  margin-bottom:16px;line-height:1.1;
+}
+.besoin-desc{
+  font-size:15px;font-style:italic;
+  color:var(--ivory-dim);line-height:1.75;
+  margin-bottom:24px;
+}
+.besoin-specs{display:flex;flex-direction:column;gap:10px}
+.besoin-spec{
+  display:flex;align-items:center;gap:12px;
+  font-size:13px;font-style:italic;color:var(--ivory-dim);
+}
+.besoin-spec::before{
+  content:'◆';font-size:6px;color:var(--bronze);flex-shrink:0;
+}
+.besoin-status{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'Josefin Sans',sans-serif;
+  font-size:7.5px;letter-spacing:.3em;text-transform:uppercase;
+  margin-top:24px;padding:8px 16px;
+  border:1px solid;
+}
+.status-prioritaire{color:var(--bronze-bright);border-color:rgba(212,175,80,.3);background:rgba(212,175,80,.06)}
+.status-planifie{color:var(--ivory-dim);border-color:rgba(200,194,180,.15);background:rgba(200,194,180,.03)}
+.status-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.status-prioritaire .status-dot{background:var(--bronze-bright)}
+.status-planifie .status-dot{background:rgba(200,194,180,.4)}
+
+/* SYNTHESE */
+#synthese{
+  background:var(--sepia);
+  padding:80px 64px;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+}
+.synth-quote{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(22px,2.8vw,36px);
+  font-style:italic;color:var(--ivory-pale);
+  line-height:1.5;
+  padding:36px 0;
+  border-top:1px solid rgba(212,175,80,.2);
+  border-bottom:1px solid rgba(212,175,80,.2);
+}
+.synth-quote::before{
+  content:'\201C';
+  font-size:80px;color:var(--bronze);opacity:.25;
+  line-height:0;vertical-align:-32px;margin-right:6px;
+}
+.synth-signataires{
+  display:flex;gap:24px;margin-top:28px;
+}
+.synth-sig{
+  display:flex;flex-direction:column;gap:4px;
+}
+.synth-sig-name{
+  font-family:'DM Serif Display',serif;
+  font-size:17px;color:var(--ivory-pale);
+}
+.synth-sig-title{
+  font-family:'Josefin Sans',sans-serif;
+  font-size:8px;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--bronze);
+}
+.synth-sep{
+  width:1px;background:rgba(212,175,80,.2);align-self:stretch;
+}
+.synth-right{display:flex;flex-direction:column;gap:20px}
+.synth-kpi{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:20px 24px;
+  background:rgba(212,175,80,.04);
+  border:1px solid rgba(212,175,80,.1);
+  transition:border-color .3s;
+}
+.synth-kpi:hover{border-color:rgba(212,175,80,.3)}
+.synth-kpi-label{
+  font-size:15px;font-style:italic;color:var(--ivory-dim);
+}
+.synth-kpi-val{
+  font-family:'DM Serif Display',serif;
+  font-size:22px;color:var(--bronze-bright);
+}
+
+@media(max-width:1024px){
+  #vision-hero{padding:120px 28px 60px}
+  #objectifs{padding:80px 24px}
+  .obj-grid{grid-template-columns:1fr}
+  #besoins{padding:80px 24px}
+  .besoins-header{grid-template-columns:1fr}
+  .besoins-grid{grid-template-columns:1fr}
+  #synthese{grid-template-columns:1fr;padding:60px 24px;gap:48px}
+}
+
+  nav{padding:18px 24px}
+  .nav-center{display:none}
+  #hero{grid-template-columns:1fr}
+  .hero-left{padding:140px 28px 80px}
+  .hero-right{display:none}
+  #stats{grid-template-columns:repeat(3,1fr);padding:60px 24px}
+  #about{grid-template-columns:1fr;padding:80px 24px;gap:60px}
+  .about-left{position:relative;top:0}
+  .awards-grid{grid-template-columns:repeat(2,1fr)}
+  #practice{padding:80px 24px}
+  .team-duo{grid-template-columns:1fr}
+  .team-assoc{grid-template-columns:1fr 1fr}
+  #contact{grid-template-columns:1fr;padding:80px 24px;gap:60px}
+  .contact-info{position:relative;top:0}
+  footer{padding:60px 24px 32px}
+  .footer-top{grid-template-columns:1fr 1fr;gap:36px}
+}
+</style>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div class="pre-logo">Matens & Butler</div>
+  <div class="pre-line"></div>
+  <div class="pre-sub">Cabinet d'Avocats · Vinewood · Est. 2001</div>
+</div>
+
+<div id="cur"></div>
+<div id="cur-o"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-wordmark">
+    <span class="nav-wordmark-main">Matens <span>&</span> Butler</span>
+    <span class="nav-wordmark-sub">Cabinet d'Avocats · Vinewood</span>
+  </a>
+  <ul class="nav-center">
+    <li><a href="#about">Le Cabinet</a></li>
+    <li><a href="#awards">Distinctions</a></li>
+    <li><a href="#practice">Domaines</a></li>
+    <li><a href="#team">Associés</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#vision">Vision</a></li>
+  </ul>
+  <a href="#contact" class="nav-btn">Consultation</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Fondé en 2001 · Vinewood, Los Santos</div>
+    <h1 class="hero-title">
+      <span class="cc">Matens<br>&amp; Butler</span>
+    </h1>
+    <p class="hero-desc">Vingt-cinq ans d'excellence juridique ininterrompue. Le cabinet de référence pour les affaires les plus sensibles de Vinewood et de l'ensemble de San Andreas.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-gold">Prendre Rendez-vous</a>
+      <a href="#about" class="btn-ghost">Notre histoire →</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-bg">
+      <div class="hero-seal">
+        <span class="seal-year">2001</span>
+        <span class="seal-est">Fondé en</span>
+        <div class="seal-divider"></div>
+        <span class="seal-name">Matens & Butler</span>
+        <div class="seal-divider"></div>
+        <span class="seal-city">Vinewood · Los Santos · S.A.</span>
+      </div>
+    </div>
+    <div class="hero-strip"></div>
+  </div>
+  <div class="hero-scroll">Découvrir</div>
+</section>
+
+<!-- AWARDS TICKER -->
+<div id="ticker">
+  <div class="ticker-track" id="tickerTrack">
+    <span class="ticker-item">Cabinet de l'Année 2024 · LS Bar Association</span>
+    <span class="ticker-item">Certification ISO 9001 · Gestion de la Qualité</span>
+    <span class="ticker-item">Top 10 Droit Pénal · San Andreas Legal Review 2023</span>
+    <span class="ticker-item">Prix d'Excellence Juridique · État de San Andreas 2022</span>
+    <span class="ticker-item">Best Law Firm · Vinewood Business Awards 2021</span>
+    <span class="ticker-item">Accréditation ABA · American Bar Association</span>
+    <span class="ticker-item">Prix de l'Innovation Juridique · ILSA 2020</span>
+    <span class="ticker-item">Cabinet Élu N°1 Divertissement · Hollywood Legal Digest 2019</span>
+    <span class="ticker-item">Matens &amp; Butler — Cabinet de l'Année 2024 · LS Bar Association</span>
+    <span class="ticker-item">Certification ISO 9001 · Gestion de la Qualité</span>
+    <span class="ticker-item">Top 10 Droit Pénal · San Andreas Legal Review 2023</span>
+    <span class="ticker-item">Prix d'Excellence Juridique · État de San Andreas 2022</span>
+    <span class="ticker-item">Best Law Firm · Vinewood Business Awards 2021</span>
+    <span class="ticker-item">Accréditation ABA · American Bar Association</span>
+    <span class="ticker-item">Prix de l'Innovation Juridique · ILSA 2020</span>
+    <span class="ticker-item">Cabinet Élu N°1 Divertissement · Hollywood Legal Digest 2019</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stat reveal"><span class="stat-n">25+</span><span class="stat-l">Années<br>d'Excellence</span></div>
+  <div class="stat reveal"><span class="stat-n">$6B</span><span class="stat-l">Valeur des<br>Dossiers</span></div>
+  <div class="stat reveal"><span class="stat-n">98%</span><span class="stat-l">Taux de<br>Succès</span></div>
+  <div class="stat reveal"><span class="stat-n">47</span><span class="stat-l">Prix &<br>Distinctions</span></div>
+  <div class="stat reveal"><span class="stat-n">2</span><span class="stat-l">Associés<br>Fondateurs</span></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-left reveal-left">
+    <div class="section-tag">Notre Histoire</div>
+    <h2 class="section-title">Vingt-cinq ans<br>au sommet de<br><em>l'excellence</em></h2>
+    <p class="section-body">Fondé en 2001 par Charles Matens et Charles Butler — deux avocats d'exception issus des meilleurs barreaux du pays — notre cabinet est devenu en deux décennies l'institution juridique la plus respectée de Vinewood. De la défense pénale aux transactions les plus complexes, notre réputation n'a jamais été démentie.</p>
+  </div>
+  <div class="about-timeline reveal">
+    <div class="tl-item">
+      <div class="tl-year">2001</div>
+      <div class="tl-line"></div>
+      <div class="tl-content">
+        <div class="tl-title">Fondation du Cabinet</div>
+        <div class="tl-desc">Charles Matens et Charles Butler fondent Matens & Butler à Vinewood avec une vision commune : défendre les plus exigeants avec une intégrité absolue. Premiers locaux sur Vinewood Blvd.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2005</div>
+      <div class="tl-line"></div>
+      <div class="tl-content">
+        <div class="tl-title">Première Grande Victoire</div>
+        <div class="tl-desc">Acquittement obtenu dans l'affaire State v. Mendez — procès suivi nationalement. Le cabinet entre dans le cercle des institutions juridiques incontournables.</div>
+        <span class="tl-badge">Distintion Nationale</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2009</div>
+      <div class="tl-line"></div>
+      <div class="tl-content">
+        <div class="tl-title">Ouverture Pôle Divertissement</div>
+        <div class="tl-desc">Création du département droit du divertissement, rapidement élu N°1 à Hollywood par le Legal Digest. Représentation de stars, studios et maisons de production.</div>
+        <span class="tl-badge">Best Entertainment Law · 2009</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2015</div>
+      <div class="tl-line"></div>
+      <div class="tl-content">
+        <div class="tl-title">Certification ISO 9001</div>
+        <div class="tl-desc">Premier cabinet de Los Santos à obtenir la certification internationale de gestion de la qualité. Accréditation American Bar Association (ABA) confirmée.</div>
+        <span class="tl-badge">Certifié ISO 9001</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2019</div>
+      <div class="tl-line"></div>
+      <div class="tl-content">
+        <div class="tl-title">Prix d'Innovation Juridique ILSA</div>
+        <div class="tl-desc">Récompensé pour notre programme de médiation digitale, pionnier dans la résolution alternative des litiges à grande échelle en San Andreas.</div>
+        <span class="tl-badge">ILSA Innovation Prize</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2022</div>
+      <div class="tl-line"></div>
+      <div class="tl-content">
+        <div class="tl-title">Prix d'Excellence — État de San Andreas</div>
+        <div class="tl-desc">Décerné par le Gouverneur de San Andreas en personne pour contribution exceptionnelle à la justice et à l'État de droit dans la région.</div>
+        <span class="tl-badge">Prix Gouvernemental</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2024</div>
+      <div class="tl-line"></div>
+      <div class="tl-content">
+        <div class="tl-title">Cabinet de l'Année — LS Bar Association</div>
+        <div class="tl-desc">Couronnement de 23 ans d'efforts. Élu meilleur cabinet de Los Santos pour la troisième année consécutive. 47 prix et distinctions au total.</div>
+        <span class="tl-badge">Cabinet de l'Année 2024</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AWARDS -->
+<section id="awards">
+  <div class="awards-header">
+    <div class="reveal">
+      <div class="section-tag">Distinctions & Prix</div>
+      <h2 class="section-title">47 Prix<br>en <em>25 Ans</em></h2>
+    </div>
+    <div class="reveal">
+      <p class="section-body" style="font-size:16px">Chaque récompense est le reflet d'un engagement sans compromis envers l'excellence juridique, la déontologie et les résultats obtenus pour nos clients.</p>
+    </div>
+  </div>
+  <div class="awards-grid">
+    <div class="award-card reveal">
+      <span class="award-icon">🏆</span>
+      <span class="award-year">2024</span>
+      <div class="award-name">Cabinet de l'Année</div>
+      <div class="award-by">Los Santos Bar Association · 3ème année consécutive</div>
+      <span class="award-ribbon">★ Prestige</span>
+    </div>
+    <div class="award-card reveal">
+      <span class="award-icon">🎖️</span>
+      <span class="award-year">2022</span>
+      <div class="award-name">Prix d'Excellence Juridique</div>
+      <div class="award-by">Gouvernement de l'État de San Andreas · Décerné par le Gouverneur</div>
+      <span class="award-ribbon">★ Étatique</span>
+    </div>
+    <div class="award-card reveal">
+      <span class="award-icon">⚖️</span>
+      <span class="award-year">2023</span>
+      <div class="award-name">Top 10 Droit Pénal</div>
+      <div class="award-by">San Andreas Legal Review · Classement Annuel</div>
+    </div>
+    <div class="award-card reveal">
+      <span class="award-icon">🎬</span>
+      <span class="award-year">2019</span>
+      <div class="award-name">N°1 Droit du Divertissement</div>
+      <div class="award-by">Hollywood Legal Digest · Vinewood & Greater LS</div>
+      <span class="award-ribbon">★ Secteur</span>
+    </div>
+    <div class="award-card reveal">
+      <span class="award-icon">💼</span>
+      <span class="award-year">2021</span>
+      <div class="award-name">Best Law Firm</div>
+      <div class="award-by">Vinewood Business Awards · Choix des Professionnels</div>
+    </div>
+    <div class="award-card reveal">
+      <span class="award-icon">🌐</span>
+      <span class="award-year">2019</span>
+      <div class="award-name">Prix Innovation Juridique</div>
+      <div class="award-by">ILSA — International Law Society of Americas</div>
+      <span class="award-ribbon">★ International</span>
+    </div>
+    <div class="award-card reveal">
+      <span class="award-icon">✅</span>
+      <span class="award-year">2015</span>
+      <div class="award-name">Certification ISO 9001</div>
+      <div class="award-by">1er Cabinet Certifié de Los Santos · Qualité de Service</div>
+    </div>
+    <div class="award-card reveal">
+      <span class="award-icon">🇺🇸</span>
+      <span class="award-year">2015</span>
+      <div class="award-name">Accréditation ABA</div>
+      <div class="award-by">American Bar Association · Excellence & Déontologie</div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-tag reveal">Certifications Officielles</div>
+  <h2 class="section-title reveal">Nos <em>Accréditations</em></h2>
+  <div class="cert-grid reveal">
+    <div class="cert-badge"><span class="cert-icon">🏅</span><div class="cert-info"><span class="cert-name">ISO 9001 : 2015</span><span class="cert-org">Certification Qualité · Bureau Veritas</span></div></div>
+    <div class="cert-badge"><span class="cert-icon">⚖️</span><div class="cert-info"><span class="cert-name">Accréditation ABA</span><span class="cert-org">American Bar Association</span></div></div>
+    <div class="cert-badge"><span class="cert-icon">🌐</span><div class="cert-info"><span class="cert-name">Membre ILSA</span><span class="cert-org">Intl. Law Society of Americas</span></div></div>
+    <div class="cert-badge"><span class="cert-icon">🔒</span><div class="cert-info"><span class="cert-name">Certification RGPD</span><span class="cert-org">Confidentialité & Protection des Données</span></div></div>
+    <div class="cert-badge"><span class="cert-icon">🎓</span><div class="cert-info"><span class="cert-name">Barreau de Los Santos</span><span class="cert-org">Licence d'exercice · Depuis 2001</span></div></div>
+    <div class="cert-badge"><span class="cert-icon">📋</span><div class="cert-info"><span class="cert-name">Médiation Certifiée</span><span class="cert-org">Centre National de Médiation · USA</span></div></div>
+  </div>
+</section>
+
+<!-- PRACTICE -->
+<section id="practice">
+  <div class="practice-header reveal">
+    <div class="section-tag">Expertise</div>
+    <h2 class="section-title">Domaines de <em>Pratique</em></h2>
+  </div>
+  <div class="practice-list reveal">
+    <div class="practice-item">
+      <div class="pi-num">01</div>
+      <div class="pi-content">
+        <div class="pi-name">Droit Pénal & Défense</div>
+        <div class="pi-desc">Défense de personnalités, cadres dirigeants et particuliers dans les affaires pénales les plus complexes. Discrétion absolue, stratégie sur-mesure.</div>
+      </div>
+      <span class="pi-arrow">Consulter →</span>
+    </div>
+    <div class="practice-item">
+      <div class="pi-num">02</div>
+      <div class="pi-content">
+        <div class="pi-name">Droit du Divertissement</div>
+        <div class="pi-desc">Contrats cinéma, musique, jeux vidéo. Droits d'auteur, négociations de cachet, litige avec studios. Le cabinet N°1 de Hollywood Legal Digest.</div>
+      </div>
+      <span class="pi-arrow">Consulter →</span>
+    </div>
+    <div class="practice-item">
+      <div class="pi-num">03</div>
+      <div class="pi-content">
+        <div class="pi-name">Droit des Affaires & M&A</div>
+        <div class="pi-desc">Fusions, acquisitions, due diligence, restructurations. Assistance complète aux entreprises en croissance comme en difficulté.</div>
+      </div>
+      <span class="pi-arrow">Consulter →</span>
+    </div>
+    <div class="practice-item">
+      <div class="pi-num">04</div>
+      <div class="pi-content">
+        <div class="pi-name">Droit Immobilier de Prestige</div>
+        <div class="pi-desc">Transactions de luxe à Rockford Hills, Vinewood Hills, Richman. Litiges fonciers et optimisation patrimoniale de haut vol.</div>
+      </div>
+      <span class="pi-arrow">Consulter →</span>
+    </div>
+    <div class="practice-item">
+      <div class="pi-num">05</div>
+      <div class="pi-content">
+        <div class="pi-name">Droit de la Famille & Patrimoine</div>
+        <div class="pi-desc">Divorce confidentiel, contrats prénuptiaux, successions complexes. Pour les familles exigeant la plus grande discrétion.</div>
+      </div>
+      <span class="pi-arrow">Consulter →</span>
+    </div>
+    <div class="practice-item">
+      <div class="pi-num">06</div>
+      <div class="pi-content">
+        <div class="pi-name">Arbitrage & Médiation Internationale</div>
+        <div class="pi-desc">Résolution de conflits internationaux. Pionnier en médiation digitale, primé par l'ILSA pour l'innovation dans ce domaine.</div>
+      </div>
+      <span class="pi-arrow">Consulter →</span>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="team-header reveal">
+    <div class="section-tag">Les Fondateurs</div>
+    <h2 class="section-title">Deux <em>Associés</em>,<br>Une Vision</h2>
+  </div>
+  <div class="team-duo">
+    <div class="partner-card reveal">
+      <div class="partner-photo">
+        <div class="partner-initials">CM</div>
+        <div class="partner-photo-overlay"><p>Ancien Procureur Général de San Andreas, Charles Matens est l'architecte des grandes stratégies pénales et commerciales qui ont forgé la réputation du cabinet depuis 2001.</p></div>
+      </div>
+      <div class="partner-body">
+        <h3 class="partner-name">Charles Matens</h3>
+        <span class="partner-title">Associé Fondateur & Directeur</span>
+        <div class="partner-bar"></div>
+        <p class="partner-spec">Droit Pénal · Droit des Affaires · Arbitrage</p>
+      </div>
+    </div>
+    <div class="partner-card reveal">
+      <div class="partner-photo">
+        <div class="partner-initials">CB</div>
+        <div class="partner-photo-overlay"><p>Spécialiste du divertissement et de la propriété intellectuelle, Charles Butler a représenté les plus grandes stars de Vinewood et de Hollywood depuis la fondation du cabinet.</p></div>
+      </div>
+      <div class="partner-body">
+        <h3 class="partner-name">Charles Butler</h3>
+        <span class="partner-title">Associé Fondateur & Directeur</span>
+        <div class="partner-bar"></div>
+        <p class="partner-spec">Divertissement · PI · Droit de la Famille</p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="test-bg-text">&amp;</div>
+  <div class="test-inner">
+    <div class="section-tag" style="justify-content:center" >Témoignages</div>
+    <h2 class="section-title" style="text-align:center">Ce qu'ils disent<br>de <em>nous</em></h2>
+    <br><br>
+    <div class="test-slider">
+      <div class="test-item active">
+        <div class="test-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="test-quote">Dans l'affaire qui menaçait de détruire tout ce que j'avais construit, Matens & Butler ont tout simplement été extraordinaires. Charles Matens personnellement s'est occupé de mon dossier. Résultat : acquittement total.</p>
+        <div class="test-auth">D. Merryweather — Directeur, Merryweather Security<span>Client depuis 2016</span></div>
+      </div>
+      <div class="test-item">
+        <div class="test-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="test-quote">Pour la négociation de mon contrat avec Rockstar Pictures — 40 millions de dollars — je n'aurais confié cela à personne d'autre. Charles Butler a obtenu des conditions que je n'aurais jamais cru possibles.</p>
+        <div class="test-auth">A. De Santa — Acteur, Vinewood<span>Client depuis 2014</span></div>
+      </div>
+      <div class="test-item">
+        <div class="test-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="test-quote">La cession de nos actifs LifeInvader était d'une complexité technique et juridique redoutable. Matens & Butler ont orchestré l'opération avec une maîtrise absolue. Le meilleur investissement de l'année.</p>
+        <div class="test-auth">J. De Santa — PDG, LifeInvader Corp.<span>Client depuis 2018</span></div>
+      </div>
+    </div>
+    <div class="test-dots">
+      <button class="tdot active" onclick="goslide(0)"></button>
+      <button class="tdot" onclick="goslide(1)"></button>
+      <button class="tdot" onclick="goslide(2)"></button>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-info reveal-left">
+    <div class="section-tag">Nous Contacter</div>
+    <h2 class="section-title">Votre dossier,<br>notre <em>priorité</em></h2>
+    <p class="section-body" style="margin-bottom:40px">Chaque consultation est confidentielle. Nos fondateurs s'impliquent personnellement dans les affaires d'importance majeure.</p>
+    <div class="contact-item">
+      <span class="ci-icon">📍</span>
+      <div class="ci-body"><span class="ci-label">Adresse</span><span class="ci-val">1 Vinewood Boulevard, Vinewood Hills<br>Los Santos, SA · 90210</span></div>
+    </div>
+    <div class="contact-item">
+      <span class="ci-icon">📞</span>
+      <div class="ci-body"><span class="ci-label">Téléphone</span><span class="ci-val">+1 (555) 0 CHARLES<br>Ligne directe 24h/24 · 7j/7</span></div>
+    </div>
+    <div class="contact-item">
+      <span class="ci-icon">✉️</span>
+      <div class="ci-body"><span class="ci-label">Email</span><span class="ci-val">contact@matens-butler-law.ls<br>Réponse garantie sous 2h ouvrées</span></div>
+    </div>
+    <div class="contact-item">
+      <span class="ci-icon">⏰</span>
+      <div class="ci-body"><span class="ci-label">Horaires</span><span class="ci-val">Lundi–Vendredi : 8h – 21h<br>Urgences : 24h/24 sur rendez-vous</span></div>
+    </div>
+  </div>
+  <div class="reveal">
+    <form class="contact-form" onsubmit="submitForm(event)">
+      <div class="cf-title">Demande de Consultation</div>
+      <div class="cf-sub">Traitement confidentiel garanti — réponse sous 2h ouvrées</div>
+      <div class="cf-row">
+        <div class="cf-group"><label class="cf-label">Nom Complet</label><input class="cf-input" type="text" placeholder="Votre nom"></div>
+        <div class="cf-group"><label class="cf-label">Téléphone</label><input class="cf-input" type="tel" placeholder="+1 (555) ..."></div>
+      </div>
+      <div class="cf-group"><label class="cf-label">Email</label><input class="cf-input" type="email" placeholder="votre@email.com"></div>
+      <div class="cf-group">
+        <label class="cf-label">Domaine Juridique</label>
+        <select class="cf-select">
+          <option value="">Sélectionnez un domaine</option>
+          <option>Droit Pénal & Défense</option>
+          <option>Droit du Divertissement</option>
+          <option>Droit des Affaires & M&A</option>
+          <option>Droit Immobilier de Prestige</option>
+          <option>Droit de la Famille & Patrimoine</option>
+          <option>Arbitrage & Médiation Internationale</option>
+        </select>
+      </div>
+      <div class="cf-group"><label class="cf-label">Description du Dossier</label><textarea class="cf-textarea" placeholder="Décrivez brièvement votre situation (traitement strictement confidentiel)..."></textarea></div>
+      <button type="submit" class="cf-submit">Envoyer la Demande <span>→</span></button>
+      <p class="cf-note">Toutes vos informations sont protégées par le secret professionnel et notre certification RGPD.</p>
+    </form>
+  </div>
+</section>
+
+<!-- ============================================================
+     PAGE VISION — OBJECTIFS & BESOINS
+     ============================================================ -->
+
+<!-- VISION HERO -->
+<div id="vision">
+<section id="vision-hero">
+  <div class="vh-line"></div>
+  <div class="vh-inner reveal">
+    <div class="vh-tag">Vision Stratégique · Matens &amp; Butler · 2026</div>
+    <h2 class="vh-title">Objectifs &amp;<br><em>Perspectives</em></h2>
+    <p class="vh-desc">Deux associés, une feuille de route commune. Nos ambitions à court, moyen et long terme — ainsi que les ressources nécessaires pour y parvenir.</p>
+  </div>
+</section>
+
+<!-- OBJECTIFS -->
+<section id="objectifs">
+  <div class="reveal">
+    <div class="section-tag">Feuille de Route</div>
+    <h2 class="section-title">Nos <em>Objectifs</em></h2>
+  </div>
+  <div class="obj-grid">
+
+    <!-- COURT TERME -->
+    <div class="obj-col court reveal">
+      <div class="obj-horizon">⚡ Court Terme</div>
+      <span class="obj-period">2026</span>
+      <span class="obj-timespan">0 – 12 mois</span>
+      <div class="obj-list">
+        <div class="obj-item">
+          <div class="obj-dot"></div>
+          <div class="obj-item-body">
+            <div class="obj-item-title">Consolider la clientèle existante</div>
+            <div class="obj-item-desc">Fidéliser nos clients actuels, améliorer le suivi personnalisé et obtenir des recommandations actives dans notre réseau Vinewood.</div>
+            <span class="obj-item-tag">Clientèle</span>
+          </div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-dot"></div>
+          <div class="obj-item-body">
+            <div class="obj-item-title">Atteindre l'équilibre financier</div>
+            <div class="obj-item-desc">Couvrir l'ensemble des charges du cabinet et dégager une première rémunération stable pour les deux associés.</div>
+            <span class="obj-item-tag">Finances</span>
+          </div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-dot"></div>
+          <div class="obj-item-body">
+            <div class="obj-item-title">Structurer les processus internes</div>
+            <div class="obj-item-desc">Mettre en place des outils de gestion de dossiers, facturation et suivi client pour opérer de façon professionnelle à deux.</div>
+            <span class="obj-item-tag">Infrastructure</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOYEN TERME -->
+    <div class="obj-col moyen reveal">
+      <div class="obj-horizon">📈 Moyen Terme</div>
+      <span class="obj-period">2027 – 2028</span>
+      <span class="obj-timespan">1 – 3 ans</span>
+      <div class="obj-list">
+        <div class="obj-item">
+          <div class="obj-dot"></div>
+          <div class="obj-item-body">
+            <div class="obj-item-title">Développer la réputation publique</div>
+            <div class="obj-item-desc">Apparitions presse, classements juridiques, prises de parole dans les milieux du divertissement et des affaires à Los Santos.</div>
+            <span class="obj-item-tag">Réputation</span>
+          </div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-dot"></div>
+          <div class="obj-item-body">
+            <div class="obj-item-title">Doubler le chiffre d'affaires</div>
+            <div class="obj-item-desc">Accroître le volume de dossiers traités et monter en gamme sur les affaires à fort enjeu financier ou médiatique.</div>
+            <span class="obj-item-tag">Finances</span>
+          </div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-dot"></div>
+          <div class="obj-item-body">
+            <div class="obj-item-title">Premier recrutement</div>
+            <div class="obj-item-desc">Intégrer un premier collaborateur juridique ou assistant de direction pour soutenir la croissance du cabinet.</div>
+            <span class="obj-item-tag">Recrutement</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LONG TERME -->
+    <div class="obj-col long reveal">
+      <div class="obj-horizon">🏛️ Long Terme</div>
+      <span class="obj-period">2029 & au-delà</span>
+      <span class="obj-timespan">3 ans et plus</span>
+      <div class="obj-list">
+        <div class="obj-item">
+          <div class="obj-dot"></div>
+          <div class="obj-item-body">
+            <div class="obj-item-title">Devenir référence régionale</div>
+            <div class="obj-item-desc">S'imposer comme le cabinet incontournable de San Andreas sur nos domaines phares — pénal, divertissement, affaires.</div>
+            <span class="obj-item-tag">Réputation</span>
+          </div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-dot"></div>
+          <div class="obj-item-body">
+            <div class="obj-item-title">Constituer une équipe complète</div>
+            <div class="obj-item-desc">Recruter 3 à 5 avocats spécialisés, structurer le cabinet avec des pôles d'expertise distincts et une direction claire.</div>
+            <span class="obj-item-tag">Recrutement</span>
+          </div>
+        </div>
+        <div class="obj-item">
+          <div class="obj-dot"></div>
+          <div class="obj-item-body">
+            <div class="obj-item-title">Expansion & rayonnement</div>
+            <div class="obj-item-desc">Envisager une antenne à Rockford Hills ou Sandy Shores, et développer une activité internationale via l'arbitrage.</div>
+            <span class="obj-item-tag">Expansion</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- BESOINS -->
+<section id="besoins">
+  <div class="besoins-header">
+    <div class="reveal">
+      <div class="section-tag">Ressources Nécessaires</div>
+      <h2 class="section-title">Nos <em>Besoins</em></h2>
+    </div>
+    <div class="reveal">
+      <p class="section-body" style="font-size:16px">Pour exercer au niveau d'excellence qui est le nôtre, deux ressources sont indispensables dès à présent — un cadre de travail à la hauteur et une représentation extérieure irréprochable.</p>
+    </div>
+  </div>
+  <div class="besoins-grid">
+
+    <!-- BUREAU -->
+    <div class="besoin-card reveal">
+      <span class="besoin-number">01</span>
+      <span class="besoin-icon">🏛️</span>
+      <span class="besoin-cat">Infrastructure · Prioritaire</span>
+      <div class="besoin-title">Bureau & Locaux<br>Professionnels</div>
+      <p class="besoin-desc">Un cabinet d'avocats de notre standing requiert des locaux qui inspirent confiance et sérieux à chaque client qui franchit la porte. L'adresse est un signal de réputation.</p>
+      <div class="besoin-specs">
+        <div class="besoin-spec">Espace de réception & salle d'attente discrète</div>
+        <div class="besoin-spec">Deux bureaux privatifs insonorisés</div>
+        <div class="besoin-spec">Salle de réunion / conf call sécurisée</div>
+        <div class="besoin-spec">Adresse sur Vinewood Blvd ou Rockford Hills</div>
+        <div class="besoin-spec">Accès sécurisé, parking clients</div>
+      </div>
+      <div class="besoin-status status-prioritaire">
+        <div class="status-dot"></div>
+        Besoin Immédiat
+      </div>
+    </div>
+
+    <!-- VOITURE -->
+    <div class="besoin-card reveal">
+      <span class="besoin-number">02</span>
+      <span class="besoin-icon">🚘</span>
+      <span class="besoin-cat">Représentation · Prioritaire</span>
+      <div class="besoin-title">Voitures de<br>Fonction</div>
+      <p class="besoin-desc">Nos déplacements — audiences, rencontres clients, événements — sont autant d'occasions de véhiculer l'image du cabinet. Un avocat de Vinewood se doit d'arriver dans une voiture à la hauteur.</p>
+      <div class="besoin-specs">
+        <div class="besoin-spec">2 véhicules — un par associé fondateur</div>
+        <div class="besoin-spec">Berline premium ou SUV haut de gamme</div>
+        <div class="besoin-spec">Tenue soignée, sobre et professionnelle</div>
+        <div class="besoin-spec">Leasing ou acquisition via le cabinet</div>
+        <div class="besoin-spec">Entretien & assurance pris en charge</div>
+      </div>
+      <div class="besoin-status status-prioritaire">
+        <div class="status-dot"></div>
+        Besoin Immédiat
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SYNTHESE -->
+<section id="synthese">
+  <div class="reveal">
+    <div class="section-tag">En Résumé</div>
+    <h2 class="section-title">Notre <em>Engagement</em><br>Mutuel</h2>
+    <div class="synth-quote">
+      Nous bâtissons ce cabinet pour durer. Chaque décision, chaque client, chaque investissement est guidé par une vision long terme — faire de Matens & Butler une institution.
+    </div>
+    <div class="synth-signataires">
+      <div class="synth-sig">
+        <span class="synth-sig-name">Charles Matens</span>
+        <span class="synth-sig-title">Associé Fondateur</span>
+      </div>
+      <div class="synth-sep"></div>
+      <div class="synth-sig">
+        <span class="synth-sig-name">Charles Butler</span>
+        <span class="synth-sig-title">Associé Fondateur</span>
+      </div>
+    </div>
+  </div>
+  <div class="synth-right reveal">
+    <div class="synth-kpi">
+      <span class="synth-kpi-label">Horizon de référence</span>
+      <span class="synth-kpi-val">2026 – 2030+</span>
+    </div>
+    <div class="synth-kpi">
+      <span class="synth-kpi-label">Objectifs identifiés</span>
+      <span class="synth-kpi-val">9 priorités</span>
+    </div>
+    <div class="synth-kpi">
+      <span class="synth-kpi-label">Besoins immédiats</span>
+      <span class="synth-kpi-val">Bureau + Véhicules</span>
+    </div>
+    <div class="synth-kpi">
+      <span class="synth-kpi-label">Premier recrutement prévu</span>
+      <span class="synth-kpi-val">2027 – 2028</span>
+    </div>
+    <div class="synth-kpi">
+      <span class="synth-kpi-label">Vision à terme</span>
+      <span class="synth-kpi-val">Cabinet régional N°1</span>
+    </div>
+  </div>
+</section>
+</div><!-- end #vision -->
+
+<!-- FOOTER -->
+
+<footer>
+  <div class="footer-top">
+    <div class="reveal">
+      <div class="f-brand-name"><em>Matens</em> & <em>Butler</em></div>
+      <span class="f-brand-sub">Cabinet d'Avocats · Fondé en 2001</span>
+      <p class="f-brand-desc">Vingt-cinq ans d'excellence juridique ininterrompue au cœur de Vinewood. 47 prix et distinctions. Le cabinet de référence de San Andreas.</p>
+    </div>
+    <div class="f-col reveal">
+      <h4>Domaines</h4>
+      <ul>
+        <li><a href="#">Droit Pénal</a></li>
+        <li><a href="#">Divertissement</a></li>
+        <li><a href="#">Affaires & M&A</a></li>
+        <li><a href="#">Immobilier</a></li>
+        <li><a href="#">Famille</a></li>
+        <li><a href="#">Arbitrage</a></li>
+      </ul>
+    </div>
+    <div class="f-col reveal">
+      <h4>Le Cabinet</h4>
+      <ul>
+        <li><a href="#">Notre Histoire</a></li>
+        <li><a href="#">Les Fondateurs</a></li>
+        <li><a href="#vision">Vision & Objectifs</a></li>
+        <li><a href="#">Prix & Certifications</a></li>
+        <li><a href="#">Carrières</a></li>
+        <li><a href="#">Publications</a></li>
+      </ul>
+    </div>
+    <div class="f-col reveal">
+      <h4>Adresse</h4>
+      <address>
+        1 Vinewood Boulevard<br>
+        Vinewood Hills<br>
+        Los Santos, SA 90210<br><br>
+        +1 (555) 0 CHARLES<br>
+        Lun–Ven : 8h–21h<br>
+        Urgences 24h/24
+      </address>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="f-copy">© 2026 Matens & Butler — Tous droits réservés</span>
+    <span class="f-copy">Barreau de Los Santos · ABA · ILSA · ISO 9001</span>
+  </div>
+</footer>
+
+<script>
+// CURSOR
+const cur=document.getElementById('cur'),curo=document.getElementById('cur-o');
+let mx=0,my=0,ox=0,oy=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+function animCursor(){ox+=(mx-ox)*.12;oy+=(my-oy)*.12;curo.style.left=ox+'px';curo.style.top=oy+'px';requestAnimationFrame(animCursor)}
+animCursor();
+
+// PRELOADER
+window.addEventListener('load',()=>{
+  setTimeout(()=>{document.getElementById('preloader').classList.add('done')},1800);
+});
+
+// NAV
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('solid',window.scrollY>60);
+});
+
+// REVEAL
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});
+},{threshold:.1});
+document.querySelectorAll('.reveal,.reveal-left').forEach(el=>obs.observe(el));
+
+// TESTIMONIALS
+let cur2=0;
+const slides=document.querySelectorAll('.test-item');
+const dots=document.querySelectorAll('.tdot');
+function goslide(n){
+  slides[cur2].classList.remove('active');dots[cur2].classList.remove('active');
+  cur2=n;slides[cur2].classList.add('active');dots[cur2].classList.add('active');
+}
+setInterval(()=>goslide((cur2+1)%slides.length),7000);
+
+// FORM
+function submitForm(e){
+  e.preventDefault();
+  const btn=e.target.querySelector('.cf-submit');
+  btn.innerHTML='✓ Demande Envoyée';
+  btn.style.background='#1a4a1a';
+  btn.style.color='#7dba74';
+}
+
+// COUNTER ANIMATION
+function animCount(el,target,suffix){
+  let start=0;
+  const step=()=>{
+    start+=Math.ceil(target/60);
+    if(start>=target){el.textContent=target+suffix;return}
+    el.textContent=start+suffix;
+    requestAnimationFrame(step);
+  };step();
+}
+const statObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const nums=e.target.querySelectorAll('.stat-n');
+      nums.forEach(n=>{
+        const txt=n.textContent;
+        const val=parseInt(txt);
+        const suffix=txt.replace(/[0-9]/g,'');
+        if(!isNaN(val))animCount(n,val,suffix);
+      });
+      statObs.unobserve(e.target);
+    }
+  });
+},{threshold:.3});
+document.querySelectorAll('#stats').forEach(s=>statObs.observe(s));
+</script>
+</body>
+</html>
