@@ -1569,13 +1569,13 @@ footer{
       <div class="cf-title">Demande de Consultation</div>
       <div class="cf-sub">Traitement confidentiel garanti — réponse sous 2h ouvrées</div>
       <div class="cf-row">
-        <div class="cf-group"><label class="cf-label">Nom Complet</label><input class="cf-input" type="text" placeholder="Votre nom"></div>
-        <div class="cf-group"><label class="cf-label">Téléphone</label><input class="cf-input" type="tel" placeholder="+1 (555) ..."></div>
+        <div class="cf-group"><label class="cf-label">Nom Complet</label><input class="cf-input" type="text" name="nom" placeholder="Votre nom" required></div>
+        <div class="cf-group"><label class="cf-label">Téléphone</label><input class="cf-input" type="tel" name="telephone" placeholder="+1 (555) ..."></div>
       </div>
-      <div class="cf-group"><label class="cf-label">Email</label><input class="cf-input" type="email" placeholder="votre@email.com"></div>
+      <div class="cf-group"><label class="cf-label">Email</label><input class="cf-input" type="email" name="email" placeholder="votre@email.com" required></div>
       <div class="cf-group">
         <label class="cf-label">Domaine Juridique</label>
-        <select class="cf-select">
+        <select class="cf-select" name="domaine">
           <option value="">Sélectionnez un domaine</option>
           <option>Droit Pénal & Défense</option>
           <option>Droit du Divertissement</option>
@@ -1585,7 +1585,7 @@ footer{
           <option>Arbitrage & Médiation Internationale</option>
         </select>
       </div>
-      <div class="cf-group"><label class="cf-label">Description du Dossier</label><textarea class="cf-textarea" placeholder="Décrivez brièvement votre situation (traitement strictement confidentiel)..."></textarea></div>
+      <div class="cf-group"><label class="cf-label">Description du Dossier</label><textarea class="cf-textarea" name="description" placeholder="Décrivez brièvement votre situation (traitement strictement confidentiel)..."></textarea></div>
       <button type="submit" class="cf-submit">Envoyer la Demande <span>→</span></button>
       <p class="cf-note">Toutes vos informations sont protégées par le secret professionnel et notre certification RGPD.</p>
     </form>
@@ -1902,12 +1902,62 @@ function goslide(n){
 setInterval(()=>goslide((cur2+1)%slides.length),7000);
 
 // FORM
-function submitForm(e){
+const DISCORD_WEBHOOK='VOTRE_URL_WEBHOOK_ICI';
+
+async function submitForm(e){
   e.preventDefault();
-  const btn=e.target.querySelector('.cf-submit');
-  btn.innerHTML='✓ Demande Envoyée';
-  btn.style.background='#1a4a1a';
-  btn.style.color='#7dba74';
+  const form=e.target;
+  const btn=form.querySelector('.cf-submit');
+  const data=new FormData(form);
+  const nom=data.get('nom');
+  const email=data.get('email');
+  const tel=data.get('telephone')||'Non renseigné';
+  const domaine=data.get('domaine')||'Non précisé';
+  const desc=data.get('description')||'—';
+
+  btn.innerHTML='Envoi en cours…';
+  btn.disabled=true;
+
+  const payload={
+    username:'Matens & Butler',
+    avatar_url:'https://i.imgur.com/AfFp7pu.png',
+    embeds:[{
+      title:'📋 Nouvelle demande de consultation',
+      color:0xD4AF50,
+      fields:[
+        {name:'👤 Nom',value:nom,inline:true},
+        {name:'📧 Email',value:email,inline:true},
+        {name:'📞 Téléphone',value:tel,inline:true},
+        {name:'⚖️ Domaine',value:domaine,inline:false},
+        {name:'📝 Description',value:desc.slice(0,1024),inline:false},
+      ],
+      footer:{text:'Matens & Butler · Cabinet d\'Avocats · Vinewood, Los Santos'},
+      timestamp:new Date().toISOString()
+    }]
+  };
+
+  try{
+    const r=await fetch(DISCORD_WEBHOOK,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload)
+    });
+    if(r.ok||r.status===204){
+      btn.innerHTML='✓ Demande Envoyée';
+      btn.style.background='var(--sepia)';
+      btn.style.color='var(--bronze-pale)';
+      btn.style.opacity='1';
+      form.reset();
+    }else{
+      throw new Error('HTTP '+r.status);
+    }
+  }catch(err){
+    btn.innerHTML='Erreur — Réessayez';
+    btn.style.background='var(--red)';
+    btn.style.color='var(--ivory-pale)';
+    btn.style.opacity='1';
+    btn.disabled=false;
+  }
 }
 
 // COUNTER ANIMATION
