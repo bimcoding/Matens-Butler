@@ -1076,31 +1076,100 @@ footer{
 }
 
 @media(max-width:1024px){
-  #vision-hero{padding:120px 28px 60px}
-  #objectifs{padding:80px 24px}
+  #vision-hero{padding:120px 32px 60px}
+  #objectifs{padding:80px 32px}
   .obj-grid{grid-template-columns:1fr}
-  #besoins{padding:80px 24px}
+  #besoins{padding:80px 32px}
   .besoins-header{grid-template-columns:1fr}
   .besoins-grid{grid-template-columns:1fr}
-  #synthese{grid-template-columns:1fr;padding:60px 24px;gap:48px}
+  #synthese{grid-template-columns:1fr;padding:60px 32px;gap:48px}
+  nav{padding:18px 32px}
+  nav.solid{padding:14px 32px}
+  .nav-center{gap:24px}
+  #hero{padding:0}
+  #stats{padding:60px 32px}
+  #about{padding:80px 32px;gap:60px}
+  #awards{padding:80px 32px}
+  .awards-grid{grid-template-columns:repeat(2,1fr)}
+  .awards-header{gap:48px}
+  #certifications{padding:60px 32px}
+  #practice{padding:80px 32px}
+  #team{padding:80px 32px}
+  #testimonials{padding:80px 32px}
+  #contact{padding:80px 32px;gap:60px}
+  footer{padding:60px 32px 32px}
 }
 
+@media(max-width:768px){
   nav{padding:18px 24px}
+  nav.solid{padding:14px 24px}
   .nav-center{display:none}
+  .nav-btn{padding:10px 18px;font-size:8px;letter-spacing:.25em}
+
   #hero{grid-template-columns:1fr}
-  .hero-left{padding:140px 28px 80px}
+  .hero-left{padding:120px 24px 72px}
   .hero-right{display:none}
-  #stats{grid-template-columns:repeat(3,1fr);padding:60px 24px}
-  #about{grid-template-columns:1fr;padding:80px 24px;gap:60px}
+  .hero-scroll{left:24px;bottom:28px}
+
+  #stats{grid-template-columns:repeat(3,1fr);padding:48px 16px}
+  .stat{padding:20px 12px}
+  .stat-n{font-size:36px}
+
+  #about{grid-template-columns:1fr;padding:72px 24px;gap:48px}
   .about-left{position:relative;top:0}
-  .awards-grid{grid-template-columns:repeat(2,1fr)}
-  #practice{padding:80px 24px}
-  .team-duo{grid-template-columns:1fr}
-  .team-assoc{grid-template-columns:1fr 1fr}
-  #contact{grid-template-columns:1fr;padding:80px 24px;gap:60px}
+
+  #awards{padding:72px 24px}
+  .awards-header{grid-template-columns:1fr;gap:28px;margin-bottom:48px}
+
+  #certifications{padding:56px 24px}
+
+  #practice{padding:72px 24px}
+  .practice-item{grid-template-columns:44px 1fr;gap:18px;padding:26px 20px}
+  .pi-arrow{display:none}
+
+  #team{padding:72px 24px}
+  .team-duo{grid-template-columns:1fr;gap:28px;margin-bottom:32px}
+  .team-assoc{grid-template-columns:1fr 1fr;gap:16px}
+
+  #testimonials{padding:72px 24px}
+
+  #contact{grid-template-columns:1fr;padding:72px 24px;gap:48px}
   .contact-info{position:relative;top:0}
-  footer{padding:60px 24px 32px}
-  .footer-top{grid-template-columns:1fr 1fr;gap:36px}
+  .cf-row{grid-template-columns:1fr}
+
+  footer{padding:48px 24px 28px}
+  .footer-top{grid-template-columns:1fr 1fr;gap:28px}
+  .footer-bottom{flex-direction:column;gap:12px;text-align:center}
+
+  #vision-hero{padding:100px 24px 48px}
+  #objectifs{padding:64px 24px}
+  #besoins{padding:64px 24px}
+  .besoin-card{padding:36px 28px}
+  #synthese{padding:56px 24px;gap:40px}
+}
+
+@media(max-width:480px){
+  .pre-logo{font-size:28px}
+  .nav-wordmark-main{font-size:17px}
+  .nav-btn{display:none}
+
+  .hero-left{padding:110px 20px 60px}
+  .hero-eyebrow{font-size:7.5px;letter-spacing:.35em}
+  .hero-actions{flex-direction:column;align-items:flex-start;gap:20px}
+
+  #stats{grid-template-columns:repeat(2,1fr)}
+  .stat:last-child{grid-column:span 2}
+
+  .awards-grid{grid-template-columns:1fr}
+
+  .team-assoc{grid-template-columns:1fr}
+
+  .footer-top{grid-template-columns:1fr}
+
+  #objectifs{padding:48px 20px}
+  .obj-col{padding:36px 28px 40px}
+  #besoins{padding:48px 20px}
+  #synthese{padding:48px 20px}
 }
 </style>
 </head>
